@@ -48,14 +48,16 @@ bool Player::Update()
 	// L07 DONE 5: Add physics to the player - updated player position using physics
 
 	int speed = 10; 
+	//Try different values to see which works best
+	int jumpspeed = 25;
 	b2Vec2 vel = b2Vec2(0, -GRAVITY_Y); 
 
 	//L02: DONE 4: modify the position of the player using arrow keys and render the texture
 	if (app->input->GetKey(SDL_SCANCODE_W) == KEY_REPEAT) {
-		//
+		vel = b2Vec2(0, GRAVITY_Y);
 	}
 	if (app->input->GetKey(SDL_SCANCODE_S) == KEY_REPEAT) {
-		//
+		vel = b2Vec2(0, -(speed + GRAVITY_Y));
 	}
 		
 	if (app->input->GetKey(SDL_SCANCODE_A) == KEY_REPEAT) {

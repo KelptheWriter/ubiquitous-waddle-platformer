@@ -72,6 +72,23 @@ bool Scene::PreUpdate()
 // Called each loop iteration
 bool Scene::Update(float dt)
 {
+	//Godmode currently is just bool var inside player, change things accordingly afterward
+
+	if (app->input->GetKey(SDL_SCANCODE_F10) == KEY_DOWN) {
+
+		if (player->godmode = true) {
+			
+			player->godmode = false;
+
+		}
+		else {
+
+			player->godmode = true;
+
+		}
+
+	}
+
 	// L03: DONE 3: Request App to Load / Save when pressing the keys F5 (save) / F6 (load)
 	if (app->input->GetKey(SDL_SCANCODE_F5) == KEY_DOWN)
 		app->SaveGameRequest();

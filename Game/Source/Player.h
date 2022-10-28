@@ -25,6 +25,8 @@ public:
 
 public:
 
+	bool godmode = false;
+
 private:
 
 	//L02: DONE 1: Declare player parameters
@@ -33,6 +35,7 @@ private:
 
 	// L07 DONE 5: Add physics to the player - declare a Physics body
 	PhysBody* pbody;
+
 
 };
 
