@@ -281,7 +281,7 @@ bool Physics::PostUpdate()
 }
 
 
-void Physics::SetDebug()
+void Physics::Set_Debug()
 {
 	if (debug)
 		debug = false;

@@ -71,7 +71,7 @@ public:
 	b2World* world;
 	bool debug = true;
 
-	void SetDebug();
+	void Set_Debug();
 
 private:
 
