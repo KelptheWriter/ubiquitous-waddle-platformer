@@ -366,6 +366,14 @@ void Physics::BeginContact(b2Contact* contact)
 		physB->listener->OnCollision(physB, physA);
 }
 
+void Physics::SetDebug()
+{
+	if (debug)
+		debug = false;
+	else
+		debug = true;
+}
+
 b2RevoluteJoint* Physics::CreateRevoluteJoint(PhysBody* A, b2Vec2 anchorA, PhysBody* B, b2Vec2 anchorB, float angle, bool collideConnected, bool enableLimit)
 {
 	b2RevoluteJointDef revoluteJointDef;

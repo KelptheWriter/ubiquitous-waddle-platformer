@@ -66,6 +66,7 @@ public:
 	
 	// b2ContactListener ---
 	void BeginContact(b2Contact* contact);
+	void SetDebug();
 
 	b2World* world;
 	bool debug = true;
