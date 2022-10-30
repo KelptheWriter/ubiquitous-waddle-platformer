@@ -281,14 +281,6 @@ bool Physics::PostUpdate()
 }
 
 
-void Physics::Set_Debug()
-{
-	if (debug)
-		debug = false;
-	else
-		debug = true;
-	
-}
 
 // Called before quitting
 bool Physics::CleanUp()
@@ -381,6 +373,11 @@ void Physics::SetDebug()
 		debug = false;
 	else
 		debug = true;
+}
+
+bool Physics::ReturnDebug()
+{
+	return debug;
 }
 
 b2RevoluteJoint* Physics::CreateRevoluteJoint(PhysBody* A, b2Vec2 anchorA, PhysBody* B, b2Vec2 anchorB, float angle, bool collideConnected, bool enableLimit)

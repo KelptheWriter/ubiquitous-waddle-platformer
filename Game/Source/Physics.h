@@ -70,8 +70,9 @@ public:
 
 	b2World* world;
 	bool debug = true;
+	bool ReturnDebug();
 
-	void Set_Debug();
+	
 
 private:
 

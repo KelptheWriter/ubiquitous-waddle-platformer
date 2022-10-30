@@ -9,6 +9,7 @@
 #include "Map.h"
 #include "Physics.h"
 
+
 #include "Defs.h"
 #include "Log.h"
 
@@ -96,6 +97,7 @@ bool Scene::Update(float dt)
 
 	if (app->input->GetKey(SDL_SCANCODE_F6) == KEY_DOWN)
 		app->LoadGameRequest();
+
 	if (app->input->GetKey(SDL_SCANCODE_F9) == KEY_DOWN)
 		app->physics->SetDebug();
 
@@ -110,6 +112,8 @@ bool Scene::Update(float dt)
 
 	if (app->input->GetKey(SDL_SCANCODE_RIGHT) == KEY_REPEAT)
 		app->render->camera.x -= 10;
+
+	
 
 	//app->render->DrawTexture(img, 380, 100); // Placeholder not needed any more
 

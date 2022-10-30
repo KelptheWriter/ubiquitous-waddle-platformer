@@ -58,6 +58,8 @@ bool Player::Update()
 	}
 	if (app->input->GetKey(SDL_SCANCODE_S) == KEY_REPEAT) {
 		vel = b2Vec2(0, -(speed + GRAVITY_Y));
+		app->render->camera.y = 0;
+		app->render->camera.x = 0;
 	}
 		
 	if (app->input->GetKey(SDL_SCANCODE_A) == KEY_REPEAT) {
@@ -66,6 +68,24 @@ bool Player::Update()
 
 	if (app->input->GetKey(SDL_SCANCODE_D) == KEY_REPEAT) {
 		vel = b2Vec2(speed, -GRAVITY_Y);
+	}
+
+	if (app->physics->ReturnDebug() == false)
+	{
+		//app->render->camera.x = -position.x + app->render->camera.w / 2;
+		//app->render->camera.y = -position.y + app->render->camera.h / 2;
+
+		if (-app->render->camera.x + app->render->camera.w / 2 < position.x + 200)
+			app->render->camera.x-=5;
+		
+		if (-app->render->camera.x + app->render->camera.w / 2 > position.x - 200)
+			app->render->camera.x+=5;
+	
+		if (-app->render->camera.y + app->render->camera.h / 2 < position.y)
+			app->render->camera.y-=5;
+		
+		if (-app->render->camera.y + app->render->camera.h / 2 > position.y)
+			app->render->camera.y+=5;
 	}
 
 	//Set the velocity of the pbody of the player
