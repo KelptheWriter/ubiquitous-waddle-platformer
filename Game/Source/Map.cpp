@@ -221,6 +221,9 @@ bool Map::Load()
     app->physics->CreateRectangle(224 + 128, 543 + 32, 256, 64, STATIC);
     app->physics->CreateRectangle(352 + 64, 384 + 32, 128, 64, STATIC);
     app->physics->CreateRectangle(256, 704 + 32, 576, 64, STATIC);
+    
+    //float x = mapFileXML.child("map").child("objectgroup").child("object").attribute("x").as_float;
+    //app->physics->CreateRectangle(60, 60, 200, 100, STATIC);
 
     if(ret == true)
     {

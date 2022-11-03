@@ -8,6 +8,7 @@
 #include "EntityManager.h"
 #include "Map.h"
 #include "Physics.h"
+#include "Player.h"
 
 
 #include "Defs.h"
@@ -78,16 +79,7 @@ bool Scene::Update(float dt)
 
 	if (app->input->GetKey(SDL_SCANCODE_F10) == KEY_DOWN) {
 
-		if (player->godmode = true) {
-			
-			player->godmode = false;
-
-		}
-		else {
-
-			player->godmode = true;
-
-		}
+		SetGodmode();
 
 	}
 
@@ -140,4 +132,21 @@ bool Scene::CleanUp()
 	LOG("Freeing scene");
 
 	return true;
+}
+
+bool Scene::GetGodmode()
+{
+	return godmode;
+}
+
+void Scene::SetGodmode()
+{
+	if (godmode)
+	{
+		godmode = false;
+	}
+	else
+	{
+		godmode = true;
+	}
 }

@@ -20,11 +20,18 @@ struct TileSet
 	int columns;
 	int tilecount;
 
+	float objectWidth;
+	float objectHeight;
+	float objectX;
+	float objectY;
+
 	SDL_Texture* texture;
 
 	// L05: DONE 7: Create a method that receives a tile id and returns it's Rectfind the Rect associated with a specific tile id
 	SDL_Rect GetTileRect(int gid) const;
 };
+
+
 
 //  We create an enum for map type, just for convenience,
 // NOTE: Platformer game will be of type ORTHOGONAL
@@ -106,6 +113,8 @@ struct MapData
 	// L05: DONE 2: Add a list/array of layers to the map
 	List<MapLayer*> maplayers;
 };
+
+
 
 class Map : public Module
 {

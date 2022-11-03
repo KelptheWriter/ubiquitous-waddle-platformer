@@ -23,9 +23,7 @@ public:
 
 	bool CleanUp();
 
-public:
-
-	bool godmode = false;
+	
 
 private:
 

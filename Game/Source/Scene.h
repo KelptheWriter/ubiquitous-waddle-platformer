@@ -34,6 +34,12 @@ public:
 	// Called before quitting
 	bool CleanUp();
 
+	void SetGodmode();
+
+	bool GetGodmode();
+
+	bool godmode = false;
+
 public:
 
 	//L02: DONE 3: Declare a Player attribute 

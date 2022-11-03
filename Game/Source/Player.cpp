@@ -50,25 +50,65 @@ bool Player::Update()
 	int speed = 10; 
 	//Try different values to see which works best
 	int jumpspeed = 25;
-	b2Vec2 vel = b2Vec2(0, -GRAVITY_Y); 
+	//b2Vec2 vel = b2Vec2(0, -GRAVITY_Y); 
+	b2Vec2 vel = pbody->body->GetLinearVelocity();
+	vel.x = 0;
+
 
 	//L02: DONE 4: modify the position of the player using arrow keys and render the texture
-	if (app->input->GetKey(SDL_SCANCODE_W) == KEY_REPEAT) {
-		vel = b2Vec2(0, GRAVITY_Y);
-	}
-	if (app->input->GetKey(SDL_SCANCODE_S) == KEY_REPEAT) {
-		vel = b2Vec2(0, -(speed + GRAVITY_Y));
-		app->render->camera.y = 0;
-		app->render->camera.x = 0;
-	}
-		
-	if (app->input->GetKey(SDL_SCANCODE_A) == KEY_REPEAT) {
-		vel = b2Vec2(-speed, -GRAVITY_Y);
-	}
+	if (!app->scene->GetGodmode())
+	{
+		if (app->input->GetKey(SDL_SCANCODE_W) == KEY_DOWN) {
+			//vel = b2Vec2(0, GRAVITY_Y);
 
-	if (app->input->GetKey(SDL_SCANCODE_D) == KEY_REPEAT) {
-		vel = b2Vec2(speed, -GRAVITY_Y);
+			//for (int i = 0; i < 5;++i)
+			pbody->body->ApplyForce(b2Vec2(0, -700), pbody->body->GetWorldCenter(), true);
+
+			//pbody->body->ApplyLinearImpulse(b2Vec2(0, -9999*9999), pbody->body->GetWorldCenter(), true);
+
+		}
+		if (app->input->GetKey(SDL_SCANCODE_S) == KEY_REPEAT) {
+			vel = b2Vec2(0, -(speed + GRAVITY_Y));
+			app->render->camera.y = 0;
+			app->render->camera.x = 0;
+		}
+
+		if (app->input->GetKey(SDL_SCANCODE_A) == KEY_REPEAT) {
+			//vel = b2Vec2(-speed, -GRAVITY_Y);
+			vel.x = -speed;
+		}
+
+		if (app->input->GetKey(SDL_SCANCODE_D) == KEY_REPEAT) {
+			//vel = b2Vec2(speed, -GRAVITY_Y);
+			vel.x = speed;
+		}
 	}
+	else
+	{
+		vel.x = 0;
+		vel.y = 0 - 0.333334;;
+		if (app->input->GetKey(SDL_SCANCODE_W) == KEY_REPEAT) {
+			vel = b2Vec2(0, -speed);
+
+
+		}
+		if (app->input->GetKey(SDL_SCANCODE_S) == KEY_REPEAT) {
+			vel = b2Vec2(0, -(speed + GRAVITY_Y));
+			app->render->camera.y = 0;
+			app->render->camera.x = 0;
+		}
+
+		if (app->input->GetKey(SDL_SCANCODE_A) == KEY_REPEAT) {
+			//vel = b2Vec2(-speed, -GRAVITY_Y);
+			vel.x = -speed;
+		}
+
+		if (app->input->GetKey(SDL_SCANCODE_D) == KEY_REPEAT) {
+			//vel = b2Vec2(speed, -GRAVITY_Y);
+			vel.x = speed;
+		}
+	}
+	
 
 	if (app->physics->ReturnDebug() == false)
 	{
@@ -100,8 +140,11 @@ bool Player::Update()
 	return true;
 }
 
+
+
 bool Player::CleanUp()
 {
 
 	return true;
 }
+
