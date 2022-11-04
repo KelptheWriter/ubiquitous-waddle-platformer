@@ -13,7 +13,7 @@ It is a simple platformer game.
  
 ## Controls
 
- - WASD for moving, W is for jumping, S for speeding up the fall. A and D move the player left and right respectively. 
+ - WASD for moving, W is for ascending (in ladders or godmode), S for speeding up the fall. A and D move the player left and right respectively. 
  - F1 serves to load Level 1
  - F5 saves the game state
  - F6 loads the game state

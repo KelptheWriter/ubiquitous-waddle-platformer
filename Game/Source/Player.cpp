@@ -58,7 +58,7 @@ bool Player::Update()
 	//L02: DONE 4: modify the position of the player using arrow keys and render the texture
 	if (!app->scene->GetGodmode())
 	{
-		if (app->input->GetKey(SDL_SCANCODE_W) == KEY_DOWN) {
+		if (app->input->GetKey(SDL_SCANCODE_SPACE) == KEY_DOWN) {
 			//vel = b2Vec2(0, GRAVITY_Y);
 
 			//for (int i = 0; i < 5;++i)
