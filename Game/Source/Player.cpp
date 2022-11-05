@@ -41,6 +41,7 @@ bool Player::Start() {
 	pbody = app->physics->CreateCircle(position.x + 16, position.y + 16, 16, bodyType::DYNAMIC);
 	pbody->listener = this;
 	return true;
+	pbody->body->SetFixedRotation(true);
 }
 
 bool Player::Update()
@@ -55,6 +56,10 @@ bool Player::Update()
 	b2Vec2 vel = pbody->body->GetLinearVelocity();
 	vel.x = 0;
 
+	if (vel.y > 1)
+	{
+		CanJump = false;
+	}
 
 	//L02: DONE 4: modify the position of the player using arrow keys and render the texture
 	if (!app->scene->GetGodmode())
@@ -63,7 +68,19 @@ bool Player::Update()
 			//vel = b2Vec2(0, GRAVITY_Y);
 
 			//for (int i = 0; i < 5;++i)
-			pbody->body->ApplyForce(b2Vec2(0, -700), pbody->body->GetWorldCenter(), true);
+			if (CanJump)
+			{
+				CanJump = false;
+				pbody->body->ApplyForce(b2Vec2(0, -700), pbody->body->GetWorldCenter(), true);
+			}
+			else if (CanDoubleJump)
+			{
+				CanDoubleJump = false;
+				vel.y = 0;
+				pbody->body->ApplyForce(b2Vec2(0, -700), pbody->body->GetWorldCenter(), true);
+			}
+			LOG("SPEED %i", vel.y);
+			
 
 			//pbody->body->ApplyLinearImpulse(b2Vec2(0, -9999*9999), pbody->body->GetWorldCenter(), true);
 
@@ -143,9 +160,29 @@ bool Player::Update()
 
 void Player::OnCollision(PhysBody* physA, PhysBody* physB)
 {
-	app->render->camera.y = 200;
-	app->render->camera.x = 200;
-	LOG("hi!");
+	//LOG("hi!");
+	//LOG(" colliding with: %i", METERS_TO_PIXELS( physB->body->GetTransform().p.y) );
+
+	switch (physB->ctype)
+	{
+	case ColliderType::PLATFORM:
+		//LOG(" colliding gjdsjflluidjfailurfjudi");
+		if (METERS_TO_PIXELS(physB->body->GetTransform().p.y) > position.y)
+		{
+			//LOG(" colliding with: %i vs p: %i", METERS_TO_PIXELS(physB->body->GetTransform().p.y), position.y);
+			CanJump = true;
+			CanDoubleJump = true;
+		}
+		
+		
+		break;
+	default:
+		break;
+	}
+		
+		
+		
+	
 }
 
 

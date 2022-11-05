@@ -25,7 +25,8 @@ public:
 
 	void OnCollision(PhysBody* physA, PhysBody* physB);
 
-
+	bool CanJump = true;
+	bool CanDoubleJump = true;
 
 
 private:
