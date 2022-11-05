@@ -38,7 +38,8 @@ bool Player::Start() {
 	texture = app->tex->Load(texturePath);
 
 	// L07 DONE 5: Add physics to the player - initialize physics body
-	pbody = app->physics->CreateCircle(position.x+16, position.y+16, 16, bodyType::DYNAMIC);
+	pbody = app->physics->CreateCircle(position.x + 16, position.y + 16, 16, bodyType::DYNAMIC);
+	pbody->listener = this;
 	return true;
 }
 
@@ -47,7 +48,7 @@ bool Player::Update()
 
 	// L07 DONE 5: Add physics to the player - updated player position using physics
 
-	int speed = 10; 
+	int speed = 10;
 	//Try different values to see which works best
 	int jumpspeed = 25;
 	//b2Vec2 vel = b2Vec2(0, -GRAVITY_Y); 
@@ -58,7 +59,7 @@ bool Player::Update()
 	//L02: DONE 4: modify the position of the player using arrow keys and render the texture
 	if (!app->scene->GetGodmode())
 	{
-		if (app->input->GetKey(SDL_SCANCODE_SPACE) == KEY_DOWN) {
+		if (app->input->GetKey(SDL_SCANCODE_W) == KEY_DOWN) {
 			//vel = b2Vec2(0, GRAVITY_Y);
 
 			//for (int i = 0; i < 5;++i)
@@ -108,7 +109,7 @@ bool Player::Update()
 			vel.x = speed;
 		}
 	}
-	
+
 
 	if (app->physics->ReturnDebug() == false)
 	{
@@ -116,16 +117,16 @@ bool Player::Update()
 		//app->render->camera.y = -position.y + app->render->camera.h / 2;
 
 		if (-app->render->camera.x + app->render->camera.w / 2 < position.x + 200)
-			app->render->camera.x-=5;
-		
+			app->render->camera.x -= 5;
+
 		if (-app->render->camera.x + app->render->camera.w / 2 > position.x - 200)
-			app->render->camera.x+=5;
-	
+			app->render->camera.x += 5;
+
 		if (-app->render->camera.y + app->render->camera.h / 2 < position.y)
-			app->render->camera.y-=5;
-		
+			app->render->camera.y -= 5;
+
 		if (-app->render->camera.y + app->render->camera.h / 2 > position.y)
-			app->render->camera.y+=5;
+			app->render->camera.y += 5;
 	}
 
 	//Set the velocity of the pbody of the player
@@ -135,11 +136,17 @@ bool Player::Update()
 	position.x = METERS_TO_PIXELS(pbody->body->GetTransform().p.x) - 16;
 	position.y = METERS_TO_PIXELS(pbody->body->GetTransform().p.y) - 16;
 
-	app->render->DrawTexture(texture, position.x , position.y);
+	app->render->DrawTexture(texture, position.x, position.y);
 
 	return true;
 }
 
+void Player::OnCollision(PhysBody* physA, PhysBody* physB)
+{
+	app->render->camera.y = 200;
+	app->render->camera.x = 200;
+	LOG("hi!");
+}
 
 
 bool Player::CleanUp()

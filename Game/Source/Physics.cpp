@@ -34,7 +34,7 @@ bool Physics::Start()
 	LOG("Creating Physics 2D environment");
 
 	world = new b2World(b2Vec2(GRAVITY_X, -GRAVITY_Y));
-	
+
 	// Set this module as a listener for contacts
 	world->SetContactListener(this);
 
@@ -196,7 +196,7 @@ PhysBody* Physics::CreateChain(int x, int y, int* points, int size, bodyType typ
 bool Physics::PostUpdate()
 {
 	bool ret = true;
-	
+
 	// Bonus code: this will iterate all objects in the world and draw the circles
 	// You need to provide your own macro to translate meters to pixels
 	if (debug)

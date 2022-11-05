@@ -12,7 +12,7 @@ class Player : public Entity
 public:
 
 	Player();
-	
+
 	virtual ~Player();
 
 	bool Awake();
@@ -23,7 +23,10 @@ public:
 
 	bool CleanUp();
 
-	
+	void OnCollision(PhysBody* physA, PhysBody* physB);
+
+
+
 
 private:
 

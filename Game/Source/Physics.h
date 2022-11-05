@@ -1,5 +1,6 @@
 #pragma once
 #include "Module.h"
+#include "Entity.h"
 
 #include "Box2D/Box2D/Box2D.h"
 
@@ -37,8 +38,10 @@ enum class ColliderType {
 class PhysBody
 {
 public:
-	PhysBody() : listener(NULL), body(NULL)
+	PhysBody() : listener(NULL), body(NULL), ctype(ColliderType::UNKNOWN)
 	{}
+
+	~PhysBody() {}
 
 	void GetPosition(int& x, int& y) const;
 	float GetRotation() const;
@@ -48,7 +51,8 @@ public:
 public:
 	int width, height;
 	b2Body* body;
-	Module* listener;
+	Entity* listener;
+	ColliderType ctype;
 };
 
 // Module --------------------------------------
@@ -63,7 +67,7 @@ public:
 	bool PostUpdate();
 	bool CleanUp();
 
-	
+
 	PhysBody* CreateRectangle(int x, int y, int width, int height, bodyType type);
 	PhysBody* CreateCircle(int x, int y, int radious, bodyType type);
 	PhysBody* CreateRectangleSensor(int x, int y, int width, int height, bodyType type);
@@ -71,7 +75,7 @@ public:
 	b2RevoluteJoint* CreateRevoluteJoint(PhysBody* A, b2Vec2 anchorA, PhysBody* B, b2Vec2 anchorB, float angle, bool collideConnected, bool enableLimit);
 	b2PrismaticJoint* CreatePrismaticJoint(PhysBody* A, b2Vec2 anchorA, PhysBody* B, b2Vec2 anchorB, b2Vec2 axys, float maxHeight, bool collideConnected, bool enableLimit);
 	b2WeldJoint* CreateWeldJoint(PhysBody* A, b2Vec2 anchorA, PhysBody* B, b2Vec2 anchorB, float angle, bool collideConnected, bool enableLimit);
-	
+
 	// b2ContactListener ---
 	void BeginContact(b2Contact* contact);
 	void SetDebug();
@@ -80,7 +84,7 @@ public:
 	bool debug = true;
 	bool ReturnDebug();
 
-	
+
 
 private:
 

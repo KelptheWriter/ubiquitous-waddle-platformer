@@ -49,7 +49,7 @@ bool Scene::Start()
 {
 	//img = app->tex->Load("Assets/Textures/test.png");
 	//app->audio->PlayMusic("Assets/Audio/Music/music_spy.ogg");
-	
+
 	// L03: DONE: Load map
 	app->map->Load();
 
@@ -105,7 +105,7 @@ bool Scene::Update(float dt)
 	if (app->input->GetKey(SDL_SCANCODE_RIGHT) == KEY_REPEAT)
 		app->render->camera.x -= 10;
 
-	
+
 
 	//app->render->DrawTexture(img, 380, 100); // Placeholder not needed any more
 
@@ -120,7 +120,7 @@ bool Scene::PostUpdate()
 {
 	bool ret = true;
 
-	if(app->input->GetKey(SDL_SCANCODE_ESCAPE) == KEY_DOWN)
+	if (app->input->GetKey(SDL_SCANCODE_ESCAPE) == KEY_DOWN)
 		ret = false;
 
 	return ret;
