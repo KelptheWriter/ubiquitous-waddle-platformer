@@ -28,6 +28,9 @@ public:
 	bool CanJump = true;
 	bool CanDoubleJump = true;
 
+	bool LoadState(pugi::xml_node&);
+	bool SaveState(pugi::xml_node&);
+
 
 private:
 

@@ -79,7 +79,7 @@ bool Player::Update()
 				vel.y = 0;
 				pbody->body->ApplyForce(b2Vec2(0, -700), pbody->body->GetWorldCenter(), true);
 			}
-			LOG("SPEED %i", vel.y);
+			LOG("SPEED %i", app->render->camera.y);
 			
 
 			//pbody->body->ApplyLinearImpulse(b2Vec2(0, -9999*9999), pbody->body->GetWorldCenter(), true);
@@ -89,7 +89,9 @@ bool Player::Update()
 			vel = b2Vec2(0, -(speed + GRAVITY_Y));
 			//app->render->camera.y = 0;
 			//app->render->camera.x = 0;
-			app->render->camera.y += -20;
+			position.x = 0;
+			position.y = 0;
+			pbody->body->SetTransform(b2Vec2(0,0), 0);
 		}
 
 		if (app->input->GetKey(SDL_SCANCODE_A) == KEY_REPEAT) {
@@ -113,8 +115,7 @@ bool Player::Update()
 		}
 		if (app->input->GetKey(SDL_SCANCODE_S) == KEY_REPEAT) {
 			vel = b2Vec2(0, -(speed + GRAVITY_Y));
-			app->render->camera.y = 0;
-			app->render->camera.x = 0;
+			
 		}
 
 		if (app->input->GetKey(SDL_SCANCODE_A) == KEY_REPEAT) {
@@ -134,18 +135,24 @@ bool Player::Update()
 		//app->render->camera.x = -position.x + app->render->camera.w / 2;
 		//app->render->camera.y = -position.y + app->render->camera.h / 2;
 
-		if (-app->render->camera.x + app->render->camera.w / 2 < position.x + 50)
+		if (-app->render->camera.x + app->render->camera.w / 2 <= position.x + 50 && -app->render->camera.x + app->render->camera.w <= 6995)
 			app->render->camera.x -= 5;
 
-		if (-app->render->camera.x + app->render->camera.w / 2 > position.x - 50)
+		if (-app->render->camera.x + app->render->camera.w / 2 > position.x - 50 && -app->render->camera.x > 0)
 			app->render->camera.x += 5;
 
-		//if (-app->render->camera.y + app->render->camera.h / 2 < position.y)
+		//if (-app->render->camera.y + app->render->camera.h / 2 < position.y)                                   && app->render->camera.y <= -7000
 		//	app->render->camera.y -= 20;
 		//
-		//if (-app->render->camera.y + app->render->camera.h / 2 > position.y)
+		//if (-app->render->camera.y + app->render->camera.h / 2 > position.y)                                
+
 		//	app->render->camera.y += 20;
-		app->render->camera.y = -position.y + app->render->camera.h / 2;
+		if (app->render->camera.y <= 3 && -position.y + app->render->camera.h / 2 <= 0 && app->render->camera.y >= -7000 + app->render->camera.h && -position.y + app->render->camera.h / 2 >= -7000 + app->render->camera.h)
+		{
+			app->render->camera.y = -position.y + app->render->camera.h / 2;
+		}
+		
+
 	}
 
 	//Set the velocity of the pbody of the player
@@ -162,28 +169,28 @@ bool Player::Update()
 
 void Player::OnCollision(PhysBody* physA, PhysBody* physB)
 {
-	//LOG("hi!");
-	//LOG(" colliding with: %i", METERS_TO_PIXELS( physB->body->GetTransform().p.y) );
+	
+	
 
 	switch (physB->ctype)
 	{
 	case ColliderType::PLATFORM:
-		//LOG(" colliding gjdsjflluidjfailurfjudi");
+		
 		if (METERS_TO_PIXELS(physB->body->GetTransform().p.y) > position.y)
 		{
-			//LOG(" colliding with: %i vs p: %i", METERS_TO_PIXELS(physB->body->GetTransform().p.y), position.y);
+			
 			CanJump = true;
 			CanDoubleJump = true;
 		}
 		break;
 	case ColliderType::DANGER:
-		//LOG(" colliding gjdsjflluidjfailurfjudi");
+		
 		
 
 		break;
 
 	case ColliderType::WIN:
-		//LOG(" colliding gjdsjflluidjfailurfjudi");
+		
 		
 
 
@@ -195,6 +202,30 @@ void Player::OnCollision(PhysBody* physA, PhysBody* physB)
 		
 		
 	
+}
+
+bool Player::LoadState(pugi::xml_node& data)
+{
+	position.x = data.child("position").attribute("x").as_int();
+	position.y = data.child("position").attribute("y").as_int();
+
+	pbody->body->SetTransform(b2Vec2(position.x, position.y), 0);
+
+	return true;
+}
+
+// L03: DONE 8: Create a method to save the state of the renderer
+// using append_child and append_attribute
+bool Player::SaveState(pugi::xml_node& data)
+{
+	pugi::xml_node pla = data.append_child("position");
+
+	pla.append_attribute("x") = position.x;
+	pla.append_attribute("y") = position.y;
+
+
+
+	return true;
 }
 
 

@@ -241,6 +241,7 @@ bool Render::LoadState(pugi::xml_node& data)
 // using append_child and append_attribute
 bool Render::SaveState(pugi::xml_node& data)
 {
+	LOG("%s", data);
 	pugi::xml_node cam = data.append_child("camera");
 
 	cam.append_attribute("x") = camera.x;
