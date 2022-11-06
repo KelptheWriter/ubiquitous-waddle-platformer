@@ -4,10 +4,7 @@
 #include "Render.h"
 #include "Textures.h"
 #include "Audio.h"
-#include "LogoScreen.h"
-#include "TitleScreen.h"
 #include "Scene.h"
-#include "FadeToBlack.h"
 #include "EntityManager.h"
 #include "Map.h"
 #include "Physics.h"
@@ -30,10 +27,7 @@ App::App(int argc, char* args[]) : argc(argc), args(args)
 	audio = new Audio();
 	//L07 DONE 2: Add Physics module
 	physics = new Physics();
-	fadetoblack = new FadeToBlack();
-	logoscreen = new LogoScreen();
 	scene = new Scene();
-	titleScreen = new TitleScreen();
 	entityManager = new EntityManager();
 	map = new Map();
 
@@ -45,8 +39,7 @@ App::App(int argc, char* args[]) : argc(argc), args(args)
 	AddModule(audio);
 	//L07 DONE 2: Add Physics module
 	AddModule(physics);
-	AddModule(fadetoblack);
-	AddModule(logoscreen);
+	AddModule(scene);
 	AddModule(entityManager);
 	AddModule(map);
 

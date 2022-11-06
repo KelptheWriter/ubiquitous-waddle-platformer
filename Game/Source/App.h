@@ -15,10 +15,7 @@ class Input;
 class Render;
 class Textures;
 class Audio;
-class LogoScreen;
-class TitleScreen;
 class Scene;
-class FadeToBlack;
 class EntityManager;
 class Map;
 //L07 DONE 2: Add Physics module
@@ -89,10 +86,7 @@ public:
 	Render* render;
 	Textures* tex;
 	Audio* audio;
-	LogoScreen* logoscreen;
-	TitleScreen* titleScreen;
 	Scene* scene;
-	FadeToBlack* fadetoblack;
 	EntityManager* entityManager;
 	Map* map;
 	//L07 DONE 2: Add Physics module

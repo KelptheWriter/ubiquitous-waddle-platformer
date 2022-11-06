@@ -57,7 +57,7 @@ void Map::Draw()
 
     while (mapLayerItem != NULL) {
 
-        //L06: DONE 7: use GetProperty method to ask each layer if your “DrawEproperty is true.
+        //L06: DONE 7: use GetProperty method to ask each layer if your “Draw” property is true.
         if (mapLayerItem->data->properties.GetProperty("Draw") != NULL && mapLayerItem->data->properties.GetProperty("Draw")->value) {
 
             for (int x = 0; x < mapLayerItem->data->width; x++)
@@ -229,7 +229,7 @@ bool Map::Load()
 
     while (mapLayerItem != NULL) {
 
-        //L06: DONE 7: use GetProperty method to ask each layer if your “DrawEproperty is true.
+        //L06: DONE 7: use GetProperty method to ask each layer if your “Draw” property is true.
        
 
         if (mapLayerItem->data->properties.GetProperty("HasCollisions") != NULL && mapLayerItem->data->properties.GetProperty("HasCollisions")->value) {
