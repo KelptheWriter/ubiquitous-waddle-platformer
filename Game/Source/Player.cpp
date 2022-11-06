@@ -89,9 +89,7 @@ bool Player::Update()
 			vel = b2Vec2(0, -(speed + GRAVITY_Y));
 			//app->render->camera.y = 0;
 			//app->render->camera.x = 0;
-			position.x = 0;
-			position.y = 0;
-			pbody->body->SetTransform(b2Vec2(0,0), 0);
+			
 		}
 
 		if (app->input->GetKey(SDL_SCANCODE_A) == KEY_REPEAT) {
@@ -127,6 +125,22 @@ bool Player::Update()
 			//vel = b2Vec2(speed, -GRAVITY_Y);
 			vel.x = speed;
 		}
+	}
+	if (app->input->GetKey(SDL_SCANCODE_F1) == KEY_DOWN)
+	{
+		position.x = PIXEL_TO_METERS(165);
+		position.y = PIXEL_TO_METERS(165);
+		pbody->body->SetTransform(b2Vec2(position.x, position.y), 0);
+		app->render->camera.x = 0;
+		app->render->camera.y = 0;
+	}
+	if (app->input->GetKey(SDL_SCANCODE_F3) == KEY_DOWN)
+	{
+		position.x = PIXEL_TO_METERS(165);
+		position.y = PIXEL_TO_METERS(165);
+		pbody->body->SetTransform(b2Vec2(position.x, position.y), 0);
+		app->render->camera.x = 0;
+		app->render->camera.y = 0;
 	}
 
 
