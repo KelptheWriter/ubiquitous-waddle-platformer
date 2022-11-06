@@ -50,7 +50,7 @@ bool TitleScreen::PreUpdate()
 bool TitleScreen::Update(float dt)
 {
 	if (app->input->GetKey(SDL_SCANCODE_SPACE) == KEY_DOWN)
-		app->fadetoblack->FadetoBlack(this, app->scene);
+	//	app->fadetoblack->FadetoBlack(this, app->scene);
 
 
 	app->render->DrawTexture(img, 300, 150);

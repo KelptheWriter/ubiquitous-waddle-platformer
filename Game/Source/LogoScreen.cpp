@@ -53,7 +53,7 @@ bool LogoScreen::Update(float dt)
 	app->render->DrawTexture(img, 300, 150);
 
 	if (app->input->GetKey(SDL_SCANCODE_SPACE) == KEY_DOWN)
-		app->fadetoblack->FadetoBlack(this, app->titleScreen);
+	//	app->fadetoblack->FadetoBlack(this, app->titleScreen);
 
 	return true;
 }
