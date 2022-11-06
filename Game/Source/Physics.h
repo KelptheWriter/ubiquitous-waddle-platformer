@@ -30,6 +30,8 @@ enum class ColliderType {
 	PLAYER,
 	ITEM,
 	PLATFORM,
+	DANGER,
+	WIN,
 	UNKNOWN
 	// ..
 };

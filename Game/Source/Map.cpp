@@ -73,6 +73,8 @@ void Map::Draw()
                     SDL_Rect r = tileset->GetTileRect(gid);
                     iPoint pos = MapToWorld(x, y);
 
+                    
+
                     app->render->DrawTexture(tileset->texture,
                         pos.x,
                         pos.y,
@@ -81,29 +83,29 @@ void Map::Draw()
             }
         }
 
-        if (mapLayerItem->data->properties.GetProperty("HasCollisions") != NULL && mapLayerItem->data->properties.GetProperty("HasCollisions")->value) {
-
-            for (int x = 0; x < mapLayerItem->data->width; x++)
-            {
-                for (int y = 0; y < mapLayerItem->data->height; y++)
-                {
-                    // L05: DONE 9: Complete the draw function
-                    int gid = mapLayerItem->data->Get(x, y);
-
-                    ////L06: DONE 3: Obtain the tile set using GetTilesetFromTileId
-                    TileSet* tileset = GetTilesetFromTileId(gid);
-
-                    SDL_Rect r = tileset->GetTileRect(gid);
-                    iPoint pos = MapToWorld(x, y);
-
-                    //app->render->DrawTexture(tileset->texture,
-                    //    pos.x,
-                    //    pos.y,
-                    //    &r);
-                    app->physics->CreateRectangle(pos.x, pos.y, 200, 100, STATIC);
-                }
-            }
-        }
+       // if (mapLayerItem->data->properties.GetProperty("HasCollisions") != NULL && mapLayerItem->data->properties.GetProperty("HasCollisions")->value) {
+       //
+       //     for (int x = 0; x < mapLayerItem->data->width; x++)
+       //     {
+       //         for (int y = 0; y < mapLayerItem->data->height; y++)
+       //         {
+       //             // L05: DONE 9: Complete the draw function
+       //             int gid = mapLayerItem->data->Get(x, y);
+       //
+       //             //L06: DONE 3: Obtain the tile set using GetTilesetFromTileId
+       //             TileSet* tileset = GetTilesetFromTileId(gid);
+       //
+       //             SDL_Rect r = tileset->GetTileRect(gid);
+       //             iPoint pos = MapToWorld(x, y);
+       //
+       //             app->render->DrawTexture(tileset->texture,
+       //                 pos.x,
+       //                 pos.y,
+       //                 &r);
+       //         }
+       //     }
+       // }
+     
 
         mapLayerItem = mapLayerItem->next;
 
@@ -218,6 +220,63 @@ bool Map::Load()
     
     // L07 DONE 3: Create colliders
     // Later you can create a function here to load and create the colliders from the map
+    ////////////////////////////////////////////////////////////////////////////////////////////////
+    ////////////////////////////////////////////////////////////////////////////////////////////////
+    ////////////////////////////////////////////////////////////////////////////////////////////////
+
+    ListItem<MapLayer*>* mapLayerItem;
+    mapLayerItem = mapData.maplayers.start;
+
+    while (mapLayerItem != NULL) {
+
+        //L06: DONE 7: use GetProperty method to ask each layer if your “Draw” property is true.
+       
+
+        if (mapLayerItem->data->properties.GetProperty("HasCollisions") != NULL && mapLayerItem->data->properties.GetProperty("HasCollisions")->value) {
+
+            for (int x = 0; x < mapLayerItem->data->width; x++)
+            {
+                for (int y = 0; y < mapLayerItem->data->height; y++)
+                {
+                    // L05: DONE 9: Complete the draw function
+                    int gid = mapLayerItem->data->Get(x, y);
+
+                    //L06: DONE 3: Obtain the tile set using GetTilesetFromTileId
+                    TileSet* tileset = GetTilesetFromTileId(gid);
+
+                    SDL_Rect r = tileset->GetTileRect(gid);
+                    iPoint pos = MapToWorld(x, y);
+
+                    if (gid == 167)
+                    {
+                        PhysBody* platformX = app->physics->CreateRectangle(pos.x + r.w/2, pos.y + r.h/2, r.w, r.h, STATIC);
+                        platformX->ctype = ColliderType::PLATFORM;
+                    }
+                    else if (gid == 166)
+                    {
+                        PhysBody* platformX = app->physics->CreateRectangle(pos.x + r.w / 2, pos.y + r.h / 2, r.w, r.h, STATIC);
+                        platformX->ctype = ColliderType::DANGER;
+                    }
+                    else if (gid == 168)
+                    {
+                        PhysBody* platformX = app->physics->CreateRectangle(pos.x + r.w / 2, pos.y + r.h / 2, r.w, r.h, STATIC);
+                        platformX->ctype = ColliderType::WIN;
+                    }
+
+                   // app->render->DrawTexture(tileset->texture,
+                   //     pos.x,
+                   //     pos.y,
+                   //     &r);
+                }
+            }
+        }
+
+
+        mapLayerItem = mapLayerItem->next;
+
+    }
+
+
     PhysBody* platform1 = app->physics->CreateRectangle(224 + 128, 543 + 32, 256, 64, STATIC);
     platform1->ctype = ColliderType::PLATFORM;
     PhysBody* platform2 = app->physics->CreateRectangle(352 + 64, 384 + 32, 128, 64, STATIC);

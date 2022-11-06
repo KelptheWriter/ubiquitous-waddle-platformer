@@ -87,8 +87,9 @@ bool Player::Update()
 		}
 		if (app->input->GetKey(SDL_SCANCODE_S) == KEY_REPEAT) {
 			vel = b2Vec2(0, -(speed + GRAVITY_Y));
-			app->render->camera.y = 0;
-			app->render->camera.x = 0;
+			//app->render->camera.y = 0;
+			//app->render->camera.x = 0;
+			app->render->camera.y += -20;
 		}
 
 		if (app->input->GetKey(SDL_SCANCODE_A) == KEY_REPEAT) {
@@ -133,17 +134,18 @@ bool Player::Update()
 		//app->render->camera.x = -position.x + app->render->camera.w / 2;
 		//app->render->camera.y = -position.y + app->render->camera.h / 2;
 
-		if (-app->render->camera.x + app->render->camera.w / 2 < position.x + 200)
+		if (-app->render->camera.x + app->render->camera.w / 2 < position.x + 50)
 			app->render->camera.x -= 5;
 
-		if (-app->render->camera.x + app->render->camera.w / 2 > position.x - 200)
+		if (-app->render->camera.x + app->render->camera.w / 2 > position.x - 50)
 			app->render->camera.x += 5;
 
-		if (-app->render->camera.y + app->render->camera.h / 2 < position.y)
-			app->render->camera.y -= 5;
-
-		if (-app->render->camera.y + app->render->camera.h / 2 > position.y)
-			app->render->camera.y += 5;
+		//if (-app->render->camera.y + app->render->camera.h / 2 < position.y)
+		//	app->render->camera.y -= 20;
+		//
+		//if (-app->render->camera.y + app->render->camera.h / 2 > position.y)
+		//	app->render->camera.y += 20;
+		app->render->camera.y = -position.y + app->render->camera.h / 2;
 	}
 
 	//Set the velocity of the pbody of the player
@@ -173,8 +175,18 @@ void Player::OnCollision(PhysBody* physA, PhysBody* physB)
 			CanJump = true;
 			CanDoubleJump = true;
 		}
+		break;
+	case ColliderType::DANGER:
+		//LOG(" colliding gjdsjflluidjfailurfjudi");
 		
+
+		break;
+
+	case ColliderType::WIN:
+		//LOG(" colliding gjdsjflluidjfailurfjudi");
 		
+
+
 		break;
 	default:
 		break;
