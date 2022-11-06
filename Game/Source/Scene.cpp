@@ -79,7 +79,16 @@ bool Scene::Update(float dt)
 
 	if (app->input->GetKey(SDL_SCANCODE_F10) == KEY_DOWN) {
 
-		SetGodmode();
+		if (player->godmode = true) {
+			
+			player->godmode = false;
+
+		}
+		else {
+
+			player->godmode = true;
+
+		}
 
 	}
 
@@ -91,6 +100,9 @@ bool Scene::Update(float dt)
 
 	if (app->input->GetKey(SDL_SCANCODE_F6) == KEY_DOWN)
 		app->LoadGameRequest();
+	if (app->input->GetKey(SDL_SCANCODE_F9) == KEY_DOWN)
+		//	app->physics->debug = false;
+		app->physics->SetDebug();
 
 	if (app->input->GetKey(SDL_SCANCODE_F9) == KEY_DOWN)
 		app->physics->SetDebug();

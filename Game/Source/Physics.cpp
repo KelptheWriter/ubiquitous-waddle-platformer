@@ -283,6 +283,14 @@ bool Physics::PostUpdate()
 }
 
 
+void Physics::SetDebug()
+{
+	if (debug)
+		debug = false;
+	else
+		debug = true;
+	
+}
 
 // Called before quitting
 bool Physics::CleanUp()
@@ -369,13 +377,6 @@ void Physics::BeginContact(b2Contact* contact)
 		physB->listener->OnCollision(physB, physA);
 }
 
-void Physics::SetDebug()
-{
-	if (debug)
-		debug = false;
-	else
-		debug = true;
-}
 
 bool Physics::ReturnDebug()
 {
