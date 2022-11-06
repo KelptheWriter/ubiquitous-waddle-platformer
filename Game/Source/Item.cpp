@@ -52,7 +52,7 @@ bool Item::Update()
 
 void Item::OnCollision(PhysBody* physA, PhysBody* physB)
 {
-	LOG("Hello hooman");
+	
 }
 
 bool Item::CleanUp()
