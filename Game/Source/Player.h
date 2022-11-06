@@ -32,8 +32,6 @@ public:
 	bool SaveState(pugi::xml_node&);
 
 
-	bool godmode = false;
-
 private:
 
 	//L02: DONE 1: Declare player parameters

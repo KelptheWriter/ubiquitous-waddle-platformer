@@ -80,7 +80,7 @@ bool Player::Update()
 				pbody->body->ApplyForce(b2Vec2(0, -700), pbody->body->GetWorldCenter(), true);
 			}
 			LOG("SPEED %i", app->render->camera.y);
-			
+
 
 			//pbody->body->ApplyLinearImpulse(b2Vec2(0, -9999*9999), pbody->body->GetWorldCenter(), true);
 
@@ -89,7 +89,7 @@ bool Player::Update()
 			vel = b2Vec2(0, -(speed + GRAVITY_Y));
 			//app->render->camera.y = 0;
 			//app->render->camera.x = 0;
-			
+
 		}
 
 		if (app->input->GetKey(SDL_SCANCODE_A) == KEY_REPEAT) {
@@ -113,7 +113,7 @@ bool Player::Update()
 		}
 		if (app->input->GetKey(SDL_SCANCODE_S) == KEY_REPEAT) {
 			vel = b2Vec2(0, -(speed + GRAVITY_Y));
-			
+
 		}
 
 		if (app->input->GetKey(SDL_SCANCODE_A) == KEY_REPEAT) {
@@ -165,7 +165,7 @@ bool Player::Update()
 		{
 			app->render->camera.y = -position.y + app->render->camera.h / 2;
 		}
-		
+
 
 	}
 
@@ -183,39 +183,39 @@ bool Player::Update()
 
 void Player::OnCollision(PhysBody* physA, PhysBody* physB)
 {
-	
-	
+
+
 
 	switch (physB->ctype)
 	{
 	case ColliderType::PLATFORM:
-		
+
 		if (METERS_TO_PIXELS(physB->body->GetTransform().p.y) > position.y)
 		{
-			
+
 			CanJump = true;
 			CanDoubleJump = true;
 		}
 		break;
 	case ColliderType::DANGER:
-		
-		
+
+
 
 		break;
 
 	case ColliderType::WIN:
-		
-		
+
+
 
 
 		break;
 	default:
 		break;
 	}
-		
-		
-		
-	
+
+
+
+
 }
 
 bool Player::LoadState(pugi::xml_node& data)
@@ -248,4 +248,3 @@ bool Player::CleanUp()
 
 	return true;
 }
-

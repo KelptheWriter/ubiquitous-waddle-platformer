@@ -83,12 +83,10 @@ public:
 	void SetDebug();
 
 	b2World* world;
-	bool debug = false;
+	bool debug = true;
 	bool ReturnDebug();
 
 
-
-	
 
 private:
 

@@ -79,30 +79,18 @@ bool Scene::Update(float dt)
 
 	if (app->input->GetKey(SDL_SCANCODE_F10) == KEY_DOWN) {
 
-		if (player->godmode = true) {
-			
-			player->godmode = false;
-
-		}
-		else {
-
-			player->godmode = true;
-
-		}
+		SetGodmode();
 
 	}
 
 	// L03: DONE 3: Request App to Load / Save when pressing the keys F5 (save) / F6 (load)
-	
+
 
 	if (app->input->GetKey(SDL_SCANCODE_F5) == KEY_DOWN)
 		app->SaveGameRequest();
 
 	if (app->input->GetKey(SDL_SCANCODE_F6) == KEY_DOWN)
 		app->LoadGameRequest();
-	if (app->input->GetKey(SDL_SCANCODE_F9) == KEY_DOWN)
-		//	app->physics->debug = false;
-		app->physics->SetDebug();
 
 	if (app->input->GetKey(SDL_SCANCODE_F9) == KEY_DOWN)
 		app->physics->SetDebug();
