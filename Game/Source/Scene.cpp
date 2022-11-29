@@ -9,6 +9,7 @@
 #include "Map.h"
 #include "Physics.h"
 #include "Player.h"
+#include "Pathfinding.h"
 
 
 #include "Defs.h"
@@ -62,6 +63,12 @@ bool Scene::Start()
 		app->map->mapData.tilesets.Count());
 
 	app->win->SetTitle(title.GetString());
+
+	//note: find where 'data' should come from
+
+	//uchar data;
+
+	//app->pathfinding->SetMap(app->map->mapData.width, app->map->mapData.height, data);
 
 	return true;
 }

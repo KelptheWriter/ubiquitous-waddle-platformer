@@ -5,6 +5,13 @@
 #include "Point.h"
 #include "SDL/include/SDL.h"
 
+enum class EnemyType {
+
+	TERRESTRIAL,
+	AERIAL
+
+};
+
 struct SDL_Texture;
 
 class Enemy : public Entity
@@ -34,11 +41,10 @@ public:
 
 private:
 
-	//L02: DONE 1: Declare player parameters
 	SDL_Texture* texture;
 	const char* texturePath;
+	EnemyType* type;
 
-	// L07 DONE 5: Add physics to the player - declare a Physics body
 	PhysBody* pbody;
 
 
