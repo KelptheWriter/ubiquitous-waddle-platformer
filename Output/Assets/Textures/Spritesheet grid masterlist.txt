@@ -1,0 +1,3 @@
+Terrestrial Enemy -> 1 frame = width = 59, height = 28
+Aerial Enemy -> 1 frame = width = 75, height = 37
+Player -> 1 frame = width = 73, height = 94
