@@ -22,7 +22,7 @@ public:
 
 	virtual ~Enemy();
 
-	bool Awake();
+	bool Awake(EnemyType* type);
 
 	bool Start();
 
