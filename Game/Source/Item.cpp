@@ -8,6 +8,7 @@
 #include "Log.h"
 #include "Point.h"
 #include "Physics.h"
+#include "EntityManager.h"
 
 Item::Item() : Entity(EntityType::ITEM)
 {
@@ -41,6 +42,13 @@ bool Item::Start() {
 
 bool Item::Update()
 {
+
+	
+
+	app->physics->world->DestroyBody(pbody->body);
+	pbody->~PhysBody();
+	app->entityManager->DestroyEntity(this);
+
 	// L07 DONE 4: Add a physics to an item - update the position of the object from the physics.  
 	position.x = METERS_TO_PIXELS(pbody->body->GetTransform().p.x) - 16;
 	position.y = METERS_TO_PIXELS(pbody->body->GetTransform().p.y) - 16;
@@ -52,7 +60,28 @@ bool Item::Update()
 
 void Item::OnCollision(PhysBody* physA, PhysBody* physB)
 {
-	
+	switch (physB->ctype)
+	{
+	case ColliderType::PLAYER:
+
+		
+
+		break;
+	case ColliderType::DANGER:
+
+		
+
+		break;
+
+	case ColliderType::WIN:
+
+
+
+
+		break;
+	default:
+		break;
+	}
 }
 
 bool Item::CleanUp()

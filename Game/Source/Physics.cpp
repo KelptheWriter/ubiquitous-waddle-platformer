@@ -110,6 +110,7 @@ PhysBody* Physics::CreateCircle(int x, int y, int radious, bodyType type)
 	b2FixtureDef fixture;
 	fixture.shape = &circle;
 	fixture.density = 1.0f;
+	//fixture.friction = 100;
 	b->ResetMassData();
 
 	b->CreateFixture(&fixture);
@@ -179,6 +180,8 @@ PhysBody* Physics::CreateChain(int x, int y, int* points, int size, bodyType typ
 
 	b2FixtureDef fixture;
 	fixture.shape = &shape;
+	fixture.friction = 999999;
+	
 
 	b->CreateFixture(&fixture);
 

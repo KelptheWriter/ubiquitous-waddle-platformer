@@ -4,6 +4,7 @@
 #include "Entity.h"
 #include "Point.h"
 #include "SDL/include/SDL.h"
+#include "Animation.h"
 
 struct SDL_Texture;
 
@@ -27,9 +28,20 @@ public:
 
 	bool CanJump = true;
 	bool CanDoubleJump = true;
+	bool isWalking = false;
+
+	bool is_alive = true;
 
 	bool LoadState(pugi::xml_node&);
 	bool SaveState(pugi::xml_node&);
+
+
+
+	Animation* currentAnimation = nullptr;
+	Animation idleAnim;
+	Animation walkRightAnim;
+	Animation jumpAnim;
+	Animation dieAnim;
 
 
 private:
