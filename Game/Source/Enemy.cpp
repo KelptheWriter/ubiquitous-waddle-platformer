@@ -108,10 +108,10 @@ void Enemy::OnCollision(PhysBody* physA, PhysBody* physB)
 
 bool Enemy::LoadState(pugi::xml_node& data)
 {
-	//position.x = data.child("position").attribute("x").as_int();
-	//position.y = data.child("position").attribute("y").as_int();
+	position.x = data.child("position").attribute("x").as_int();
+	position.y = data.child("position").attribute("y").as_int();
 
-	//pbody->body->SetTransform(b2Vec2(position.x, position.y), 0);
+	pbody->body->SetTransform(b2Vec2(position.x, position.y), 0);
 
 	return true;
 }
