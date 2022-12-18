@@ -54,9 +54,25 @@ bool Enemy::Update()
 
 	pbody->body->SetLinearVelocity(vel);
 
+<<<<<<< Updated upstream
 	position.x = METERS_TO_PIXELS(pbody->body->GetTransform().p.x) - 16;
 	position.y = METERS_TO_PIXELS(pbody->body->GetTransform().p.y) - 16;
+=======
+	app->pathfinding->CreatePath(position, app->scene->player->position);
 
+	const DynArray<iPoint>* path = app->pathfinding->GetLastPath();
+>>>>>>> Stashed changes
+
+	int i = 0;
+
+	while (position != app->scene->player->position) {
+
+		position.x = path->At(i)->x;
+		position.y = path->At(i)->y;
+
+	}
+
+	app->pathfinding->ClearLastPath();
 	app->render->DrawTexture(texture, position.x, position.y);
 
 	return true;
