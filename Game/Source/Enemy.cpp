@@ -20,13 +20,13 @@ Enemy::~Enemy() {
 
 }
 
-bool Enemy::Awake(EnemyType* type) {
+bool Enemy::Awake() {
 
 	position.x = parameters.attribute("x").as_int();
 	position.y = parameters.attribute("y").as_int();
 	flying = parameters.attribute("flying").as_bool();
 	texturePath = parameters.attribute("texturepath").as_string();
-	this->type = type;
+	//this->type = type;
 
 	return true;
 }
