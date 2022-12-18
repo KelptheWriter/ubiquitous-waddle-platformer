@@ -14,6 +14,18 @@
 Enemy::Enemy() : Entity(EntityType::ENEMY)
 {
 	name.Create("Enemy");
+
+	idleAnim.PushBack({ 0, 0, 75, 37});
+	idleAnim.PushBack({ 75, 0, 75, 37 });
+
+	idleAnim.speed = 0.1f;
+
+	dieAnim.PushBack({ 75 * 2, 0, 75, 37 });
+	dieAnim.PushBack({ 75 * 2, 0, 75, 37 });
+	dieAnim.PushBack({ 75 * 2, 0, 75, 37 });
+
+	dieAnim.speed = 0.1f;
+	dieAnim.loop = false;
 }
 
 Enemy::~Enemy() {
@@ -34,18 +46,21 @@ bool Enemy::Awake() {
 bool Enemy::Start() {
 
 	texture = app->tex->Load(texturePath);
+	currentAnimation = &idleAnim;
 
 	pbody = app->physics->CreateCircle(position.x + 16, position.y + 16, 16, bodyType::DYNAMIC);
 	pbody->listener = this;
-	return true;
+	pbody->ctype = ColliderType::ENEMY;
 	pbody->body->SetFixedRotation(true);
+
+	is_alive = true;
 
 	return true;
 }
 
 bool Enemy::Update()
 {
-	LOG("I am here %d", position.x);
+	//LOG("I am here %d", position.x);
 
 	int speed = 10;
 	int jumpspeed = 25;
@@ -64,7 +79,29 @@ bool Enemy::Update()
 	position.x = METERS_TO_PIXELS(pbody->body->GetTransform().p.x) - 16;
 	position.y = METERS_TO_PIXELS(pbody->body->GetTransform().p.y) - 16;
 
-	app->render->DrawTexture(texture, position.x, position.y);
+	//app->render->DrawTexture(texture, position.x, position.y);
+
+	
+
+	if (pbody != NULL && !is_alive)
+	{
+		if (currentAnimation->HasFinished())
+		{
+			app->physics->world->DestroyBody(pbody->body);
+			pbody->~PhysBody();
+			app->entityManager->DestroyEntity(this);
+
+
+
+		}
+		//LOG("you don't need me");
+
+		
+	}
+
+	SDL_Rect rect = currentAnimation->GetCurrentFrame();
+	app->render->DrawTexture(texture, position.x - 20, position.y, &rect);
+	currentAnimation->Update();
 
 	return true;
 }
@@ -72,7 +109,7 @@ bool Enemy::Update()
 void Enemy::OnCollision(PhysBody* physA, PhysBody* physB)
 {
 
-
+	LOG(" I AM A TOASTER");
 
 	switch (physB->ctype)
 	{
@@ -91,10 +128,19 @@ void Enemy::OnCollision(PhysBody* physA, PhysBody* physB)
 
 		break;
 
-	case ColliderType::WIN:
+	case ColliderType::PLAYER:
 
+		if (METERS_TO_PIXELS((physB->body->GetTransform().p.y) < METERS_TO_PIXELS(physA->body->GetTransform().p.y) - 20) && is_alive)
+		{
+			LOG("DEAD");
+			is_alive = false;
 
+			currentAnimation = &dieAnim;
+			currentAnimation->Reset();
+		}
 
+		//physB->body->GetTransform().p.y < physA->body->GetTransform().p.y
+		
 
 		break;
 	default:

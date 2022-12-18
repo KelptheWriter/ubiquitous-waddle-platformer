@@ -73,9 +73,12 @@ bool Player::Start() {
 
 	// L07 DONE 5: Add physics to the player - initialize physics body
 	pbody = app->physics->CreateCircle(position.x + 16, position.y + 16, 16, bodyType::DYNAMIC);
+	pbody->ctype = ColliderType::PLAYER;
 	pbody->listener = this;
 
-	pbody->ctype = ColliderType::PLAYER;
+	stime.Start();
+
+	
 
 	//pbody->body->SetFixedRotation(true);
 
@@ -145,7 +148,7 @@ bool Player::Update()
 					vel.y = 0;
 					pbody->body->ApplyForce(b2Vec2(0, -700), pbody->body->GetWorldCenter(), true);
 				}
-				LOG("SPEED %i", app->render->camera.y);
+				
 
 
 				//pbody->body->ApplyLinearImpulse(b2Vec2(0, -9999*9999), pbody->body->GetWorldCenter(), true);
@@ -160,7 +163,7 @@ bool Player::Update()
 
 			if (app->input->GetKey(SDL_SCANCODE_A) == KEY_REPEAT) {
 				//vel = b2Vec2(-speed, -GRAVITY_Y);
-				LOG("fagrfasrgrgeg");
+				
 				vel.x = -speed;
 			}
 
@@ -178,6 +181,22 @@ bool Player::Update()
 			{
 				
 				isWalking = false;
+			}
+
+			if (app->input->GetKey(SDL_SCANCODE_Q) == KEY_DOWN && stime.ReadMSec() > 500)
+			{
+				pbody->body->ApplyForce(b2Vec2(-1000000, 0), pbody->body->GetWorldCenter(), true);
+				stime.Start();
+
+
+			}
+			if (app->input->GetKey(SDL_SCANCODE_E) == KEY_DOWN && stime.ReadMSec() > 500)
+			{
+
+				pbody->body->ApplyForce(b2Vec2(1000000, 0), pbody->body->GetWorldCenter(), true);
+				stime.Start();
+
+				
 			}
 		}
 
@@ -290,7 +309,7 @@ bool Player::Update()
 	if (app->input->GetKey(SDL_SCANCODE_D) == KEY_UP)
 	{
 
-		LOG("IT'S ALIVE!!!!!!!!!!!!!!!!!!!!!");
+		
 	}
 
 	return true;
@@ -326,6 +345,21 @@ void Player::OnCollision(PhysBody* physA, PhysBody* physB)
 
 	case ColliderType::WIN:
 
+
+
+
+		break;
+	case ColliderType::ENEMY:
+
+		if (METERS_TO_PIXELS((physB->body->GetTransform().p.y) -15 < METERS_TO_PIXELS(physA->body->GetTransform().p.y)))
+		{
+			LOG("I have been DEAD");
+			is_alive = false;
+		
+			currentAnimation = &dieAnim;
+			currentAnimation->Reset();
+			currentAnimation->loop = false;
+		}
 
 
 

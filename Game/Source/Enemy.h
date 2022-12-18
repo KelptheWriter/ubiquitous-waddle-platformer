@@ -4,6 +4,7 @@
 #include "Entity.h"
 #include "Point.h"
 #include "SDL/include/SDL.h"
+#include "Animation.h"
 
 enum class EnemyType {
 
@@ -34,9 +35,14 @@ public:
 
 	bool CanJump = true;
 	bool CanDoubleJump = true;
+	bool is_alive;
 
 	bool LoadState(pugi::xml_node&);
 	bool SaveState(pugi::xml_node&);
+
+	Animation* currentAnimation = nullptr;
+	Animation idleAnim;
+	Animation dieAnim;
 
 
 private:
