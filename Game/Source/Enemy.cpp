@@ -9,6 +9,7 @@
 #include "Point.h"
 #include "Physics.h"
 #include "Pathfinding.h"
+#include "EntityManager.h"
 
 Enemy::Enemy() : Entity(EntityType::ENEMY)
 {
@@ -38,10 +39,13 @@ bool Enemy::Start() {
 	pbody->listener = this;
 	return true;
 	pbody->body->SetFixedRotation(true);
+
+	return true;
 }
 
 bool Enemy::Update()
 {
+	LOG("I am here %d", position.x);
 
 	int speed = 10;
 	int jumpspeed = 25;

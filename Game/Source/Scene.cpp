@@ -10,6 +10,7 @@
 #include "Physics.h"
 #include "Player.h"
 #include "Pathfinding.h"
+#include "Enemy.h"
 
 
 #include "Defs.h"
@@ -36,6 +37,11 @@ bool Scene::Awake(pugi::xml_node& config)
 	{
 		Item* item = (Item*)app->entityManager->CreateEntity(EntityType::ITEM);
 		item->parameters = itemNode;
+	}
+	for (pugi::xml_node itemNode = config.child("enemy"); itemNode; itemNode = itemNode.next_sibling("enemy"))
+	{
+		Enemy* enemy = (Enemy*)app->entityManager->CreateEntity(EntityType::ENEMY);
+		enemy->parameters = itemNode;
 	}
 
 	//L02: DONE 3: Instantiate the player using the entity manager
