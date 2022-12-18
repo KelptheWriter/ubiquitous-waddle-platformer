@@ -10,6 +10,7 @@
 #include "Physics.h"
 #include "Player.h"
 #include "Pathfinding.h"
+#include "Enemy.h"
 
 
 #include "Defs.h"
@@ -37,6 +38,11 @@ bool Scene::Awake(pugi::xml_node& config)
 		Item* item = (Item*)app->entityManager->CreateEntity(EntityType::ITEM);
 		item->parameters = itemNode;
 	}
+	for (pugi::xml_node itemNode = config.child("enemy"); itemNode; itemNode = itemNode.next_sibling("enemy"))
+	{
+		Enemy* enemy = (Enemy*)app->entityManager->CreateEntity(EntityType::ENEMY);
+		enemy->parameters = itemNode;
+	}
 
 	//L02: DONE 3: Instantiate the player using the entity manager
 	player = (Player*)app->entityManager->CreateEntity(EntityType::PLAYER);
@@ -52,7 +58,7 @@ bool Scene::Start()
 	//app->audio->PlayMusic("Assets/Audio/Music/music_spy.ogg");
 
 	// L03: DONE: Load map
-	app->map->Load();
+	bool retLoad = app->map->Load();
 
 	// L04: DONE 7: Set the window title with map/tileset info
 	SString title("Map:%dx%d Tiles:%dx%d Tilesets:%d",
@@ -64,12 +70,23 @@ bool Scene::Start()
 
 	app->win->SetTitle(title.GetString());
 
+//<<<<<<< Updated upstream
+//=======
 	//note: find where 'data' should come from
 
-	//uchar data;
+	if (retLoad) {
+		int w, h;
+		uchar* data = NULL;
 
-	//app->pathfinding->SetMap(app->map->mapData.width, app->map->mapData.height, data);
+		bool retWalkMap = app->map->CreateWalkabilityMap(w, h, &data);
 
+		if (retWalkMap) app->pathfinding->SetMap(w, h, data);
+
+		RELEASE_ARRAY(data);
+
+	}
+
+//>>>>>>> Stashed changes
 	return true;
 }
 

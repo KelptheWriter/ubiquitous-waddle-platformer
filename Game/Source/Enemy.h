@@ -4,6 +4,7 @@
 #include "Entity.h"
 #include "Point.h"
 #include "SDL/include/SDL.h"
+#include "Animation.h"
 
 enum class EnemyType {
 
@@ -22,7 +23,7 @@ public:
 
 	virtual ~Enemy();
 
-	bool Awake(EnemyType* type);
+	bool Awake();
 
 	bool Start();
 
@@ -34,9 +35,14 @@ public:
 
 	bool CanJump = true;
 	bool CanDoubleJump = true;
+	bool is_alive;
 
 	bool LoadState(pugi::xml_node&);
 	bool SaveState(pugi::xml_node&);
+
+	Animation* currentAnimation = nullptr;
+	Animation idleAnim;
+	Animation dieAnim;
 
 
 private:
@@ -44,6 +50,11 @@ private:
 	SDL_Texture* texture;
 	const char* texturePath;
 	EnemyType* type;
+	bool isDead;
+	bool flying;
+
+	SDL_Texture* mouseTileTex = nullptr;
+	SDL_Texture* originTex = nullptr;
 
 	PhysBody* pbody;
 

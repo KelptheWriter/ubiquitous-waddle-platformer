@@ -10,10 +10,12 @@ It is a simple platformer game.
  - Collisions loaded from tiled
  - Camera follows the player
  - Godmode and debug
+ - You can jump on the enemy to kill it
  
 ## Controls
 
  - WASD for moving, W is for ascending (in godmode) or jumping, S for speeding up the fall. A and D move the player left and right respectively. 
+ - Q or E to make a dash. Careful this hability has cooldown
  - F1 and F3 teleport to the beggining
  - F5 saves the game state
  - F6 loads the game state

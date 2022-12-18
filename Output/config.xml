@@ -29,8 +29,7 @@
     <item x="384" y="352" texturepath="Assets/Textures/goldCoin.png"/>
     <item x="200" y="672" texturepath="Assets/Textures/goldCoin.png"/>
     <item x="500" y="672" texturepath="Assets/Textures/goldCoin.png"/>
-    <enemy x="600" y="150" texturepath="Assets/Textures/TerrestrialEnemy.png"/>
-    <enemy x="600" y="150" texturepath="Assets/Textures/AerialEnemy.png"/>
+    <enemy x="250" y="150" flying="true" texturepath="Assets/Textures/flyingEnemy.png"/>
   </scene>
 
   <map>
