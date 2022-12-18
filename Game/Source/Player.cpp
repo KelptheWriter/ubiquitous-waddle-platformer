@@ -88,6 +88,13 @@ bool Player::Start() {
 	
 }
 
+iPoint Player::GetPPos()
+{
+	iPoint ret = iPoint(METERS_TO_PIXELS(pbody->body->GetTransform().p.x), METERS_TO_PIXELS(pbody->body->GetTransform().p.y));
+
+	return ret;
+	
+}
 
 bool Player::Update()
 {
@@ -353,7 +360,7 @@ void Player::OnCollision(PhysBody* physA, PhysBody* physB)
 
 		if (METERS_TO_PIXELS((physB->body->GetTransform().p.y) -15 < METERS_TO_PIXELS(physA->body->GetTransform().p.y)))
 		{
-			LOG("I have been DEAD");
+			
 			is_alive = false;
 		
 			currentAnimation = &dieAnim;

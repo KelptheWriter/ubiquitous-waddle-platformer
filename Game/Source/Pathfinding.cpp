@@ -179,11 +179,12 @@ int PathFinding::CreatePath(const iPoint& origin, const iPoint& destination)
 {
 	int ret = -1;
 	int iterations = 0;
-
+	
 	// L12: TODO 1: if origin or destination are not walkable, return -1
-	if (IsWalkable(origin) && IsWalkable(destination))
+	//if (IsWalkable(origin) && IsWalkable(destination))
 	{
 		// L12: TODO 2: Create two lists: open, close
+		
 		PathList open;
 		PathList closed;
 
@@ -193,6 +194,7 @@ int PathFinding::CreatePath(const iPoint& origin, const iPoint& destination)
 		// Iterate while we have tile in the open list
 		while (open.list.Count() > 0)
 		{
+			
 			// L12: TODO 3: Move the lowest score cell from open list to the closed list
 			ListItem<PathNode>* lowest = open.GetNodeLowestScore();
 			ListItem<PathNode>* node = closed.list.Add(lowest->data);
@@ -202,6 +204,7 @@ int PathFinding::CreatePath(const iPoint& origin, const iPoint& destination)
 			if (node->data.pos == destination)
 			{
 				lastPath.Clear();
+				LOG(" I EXIST");
 
 				// Backtrack to create the final path
 				// Use the Pathnode::parent and Flip() the path when you are finish

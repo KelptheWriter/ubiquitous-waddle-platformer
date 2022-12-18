@@ -53,6 +53,9 @@ private:
 	bool isDead;
 	bool flying;
 
+	SDL_Texture* mouseTileTex = nullptr;
+	SDL_Texture* originTex = nullptr;
+
 	PhysBody* pbody;
 
 

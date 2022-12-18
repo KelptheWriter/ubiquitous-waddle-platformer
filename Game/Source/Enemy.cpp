@@ -10,6 +10,8 @@
 #include "Physics.h"
 #include "Pathfinding.h"
 #include "EntityManager.h"
+#include "Player.h"
+#include "Map.h"
 
 Enemy::Enemy() : Entity(EntityType::ENEMY)
 {
@@ -52,8 +54,14 @@ bool Enemy::Start() {
 	pbody->listener = this;
 	pbody->ctype = ColliderType::ENEMY;
 	pbody->body->SetFixedRotation(true);
+	pbody->body->SetGravityScale(0);
 
 	is_alive = true;
+
+	mouseTileTex = app->tex->Load("Assets/Maps/path_square.png");
+
+	// Texture to show path origin 
+	originTex = app->tex->Load("Assets/Maps/x_square.png");
 
 	return true;
 }
@@ -77,17 +85,52 @@ bool Enemy::Update()
 	position.x = METERS_TO_PIXELS(pbody->body->GetTransform().p.x) - 16;
 	position.y = METERS_TO_PIXELS(pbody->body->GetTransform().p.y) - 16;
 
-	app->pathfinding->CreatePath(position, app->scene->player->position);
+	//app->pathfinding->CreatePath(position, app->scene->player->position);
 
+	//const DynArray<iPoint>* path = app->pathfinding->GetLastPath();
+
+	//int i = 0;
+
+	iPoint enemyPos = iPoint(position.x, position.y);
+	iPoint destiny = app->scene->player->position;
+
+	LOG("player x tile %d", app->map->WorldToMap(destiny.x, destiny.y).x);
+
+	app->pathfinding->CreatePath(app->map->WorldToMap(enemyPos.x, enemyPos.y), app->map->WorldToMap(destiny.x,destiny.y));
+	//app->render->DrawTexture(mouseTileTex, highlightedTileWorld.x, highlightedTileWorld.y);
+	
 	const DynArray<iPoint>* path = app->pathfinding->GetLastPath();
+	LOG("this is the number %d", path->Count());
+	for (uint i = 0; i < path->Count(); ++i)
+	{
+		iPoint pos = app->map->MapToWorld(path->At(i)->x, path->At(i)->y);
+		LOG("this is the number %d", path->At(i)->x);
+		app->render->DrawTexture(mouseTileTex, pos.x, pos.y);
+	}
 
-	int i = 0;
+	//while (position != app->scene->player->position && path != nullptr) {
+	//
+	//	position.x = path->At(i)->x;
+	//	position.y = path->At(i)->y;
+	//	
+	//
+	//}
 
-	while (position != app->scene->player->position) {
 
-		position.x = path->At(i)->x;
-		position.y = path->At(i)->y;
+	if (pbody != NULL && !is_alive)
+	{
+		if (currentAnimation->HasFinished())
+		{
+			app->physics->world->DestroyBody(pbody->body);
+			pbody->~PhysBody();
+			app->entityManager->DestroyEntity(this);
 
+
+
+		}
+		
+
+		
 	}
 
 	SDL_Rect rect = currentAnimation->GetCurrentFrame();
@@ -100,7 +143,7 @@ bool Enemy::Update()
 void Enemy::OnCollision(PhysBody* physA, PhysBody* physB)
 {
 
-	LOG(" I AM A TOASTER");
+	
 
 	switch (physB->ctype)
 	{
@@ -123,7 +166,7 @@ void Enemy::OnCollision(PhysBody* physA, PhysBody* physB)
 
 		if (METERS_TO_PIXELS((physB->body->GetTransform().p.y) < METERS_TO_PIXELS(physA->body->GetTransform().p.y) - 20) && is_alive)
 		{
-			LOG("DEAD");
+			
 			is_alive = false;
 
 			currentAnimation = &dieAnim;

@@ -36,6 +36,9 @@ public:
 	bool LoadState(pugi::xml_node&);
 	bool SaveState(pugi::xml_node&);
 
+	iPoint GetPPos();
+	
+
 
 
 	Animation* currentAnimation = nullptr;
