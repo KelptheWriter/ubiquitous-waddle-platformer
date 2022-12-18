@@ -21,7 +21,7 @@ Map::~Map()
 {}
 
 // Called before render is available
-bool Map::Awake(pugi::xml_node& config)
+bool Map::Awake (pugi::xml_node& config)
 {
     LOG("Loading Map Parser");
     bool ret = true;
@@ -249,8 +249,9 @@ bool Map::Load()
 
                     if (gid == 167)
                     {
-                        PhysBody* platformX = app->physics->CreateRectangle(pos.x + r.w/2, pos.y + r.h/2, r.w, r.h, STATIC);
+                        PhysBody* platformX = app->physics->CreateRectangle(pos.x + r.w/2, pos.y + r.h/2 - 30, r.w, 10, STATIC);
                         platformX->ctype = ColliderType::PLATFORM;
+                        PhysBody* platformY = app->physics->CreateRectangle(pos.x + r.w / 2, pos.y + r.h / 2, r.w, r.h, STATIC);
                     }
                     else if (gid == 166)
                     {
@@ -259,8 +260,30 @@ bool Map::Load()
                     }
                     else if (gid == 168)
                     {
+
+                        int wall[6] = {0,0,0,70,70,70};
                         PhysBody* platformX = app->physics->CreateRectangle(pos.x + r.w / 2, pos.y + r.h / 2, r.w, r.h, STATIC);
                         platformX->ctype = ColliderType::WIN;
+                    }
+
+                    else if (gid == 169)
+                    {
+                        int wall[6] = { 0,0,0,70,70,70 };
+                        PhysBody* platformX = app->physics->CreateChain(pos.x, pos.y, wall, 6, STATIC);
+                        platformX->ctype = ColliderType::PLATFORM;
+                    }
+
+                    else if (gid == 170)
+                    {
+                        int wall[6] = { 70,0,0,70,70,70 };
+                        PhysBody* platformX = app->physics->CreateChain(pos.x, pos.y, wall, 6, STATIC);
+                        platformX->ctype = ColliderType::PLATFORM;
+                    }
+                    else if (gid == 171)
+                    {
+                        int wall[6] = { 70,0,0,70,70,70 };
+                        PhysBody* platformX = app->physics->CreateRectangle(pos.x + r.w / 2, pos.y + r.h / 2, r.w, r.h, STATIC);
+                        //platformX->ctype = ColliderType::PLATFORM;
                     }
 
                    // app->render->DrawTexture(tileset->texture,
@@ -283,6 +306,10 @@ bool Map::Load()
     platform2->ctype = ColliderType::PLATFORM;
     PhysBody* platform3 = app->physics->CreateRectangle(256, 704 + 32, 576, 64, STATIC);
     platform3->ctype = ColliderType::PLATFORM;
+
+    int wall[6] = { 0,0,0,70,70,70 };
+    PhysBody* platformX = app->physics->CreateChain(300, 300, wall, 6, STATIC);
+    platformX->ctype = ColliderType::PLATFORM;
     
     //float x = mapFileXML.child("map").child("objectgroup").child("object").attribute("x").as_float;
     //app->physics->CreateRectangle(60, 60, 200, 100, STATIC);
