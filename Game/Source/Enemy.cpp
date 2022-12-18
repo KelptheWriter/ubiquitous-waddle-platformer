@@ -74,29 +74,20 @@ bool Enemy::Update()
 
 	pbody->body->SetLinearVelocity(vel);
 
-	app->pathfinding->CreatePath(position, app->scene->player->position);
-
 	position.x = METERS_TO_PIXELS(pbody->body->GetTransform().p.x) - 16;
 	position.y = METERS_TO_PIXELS(pbody->body->GetTransform().p.y) - 16;
 
-	//app->render->DrawTexture(texture, position.x, position.y);
+	app->pathfinding->CreatePath(position, app->scene->player->position);
 
-	
+	const DynArray<iPoint>* path = app->pathfinding->GetLastPath();
 
-	if (pbody != NULL && !is_alive)
-	{
-		if (currentAnimation->HasFinished())
-		{
-			app->physics->world->DestroyBody(pbody->body);
-			pbody->~PhysBody();
-			app->entityManager->DestroyEntity(this);
+	int i = 0;
 
+	while (position != app->scene->player->position) {
 
+		position.x = path->At(i)->x;
+		position.y = path->At(i)->y;
 
-		}
-		//LOG("you don't need me");
-
-		
 	}
 
 	SDL_Rect rect = currentAnimation->GetCurrentFrame();
