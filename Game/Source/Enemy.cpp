@@ -23,6 +23,7 @@ bool Enemy::Awake(EnemyType* type) {
 
 	position.x = parameters.attribute("x").as_int();
 	position.y = parameters.attribute("y").as_int();
+	flying = parameters.attribute("flying").as_bool();
 	texturePath = parameters.attribute("texturepath").as_string();
 	this->type = type;
 

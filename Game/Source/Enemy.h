@@ -45,6 +45,7 @@ private:
 	const char* texturePath;
 	EnemyType* type;
 	bool isDead;
+	bool flying;
 
 	PhysBody* pbody;
 
