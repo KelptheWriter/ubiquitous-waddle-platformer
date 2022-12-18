@@ -51,7 +51,7 @@ bool Scene::Start()
 	//app->audio->PlayMusic("Assets/Audio/Music/music_spy.ogg");
 
 	// L03: DONE: Load map
-	app->map->Load();
+	bool retLoad = app->map->Load();
 
 	// L04: DONE 7: Set the window title with map/tileset info
 	SString title("Map:%dx%d Tiles:%dx%d Tilesets:%d",
@@ -63,6 +63,19 @@ bool Scene::Start()
 
 	app->win->SetTitle(title.GetString());
 
+<<<<<<< Updated upstream
+=======
+	//note: find where 'data' should come from
+
+	if (retLoad) {
+
+		uchar* data = NULL;
+
+		app->pathfinding->SetMap(app->map->mapData.width, app->map->mapData.height, data);
+
+	}
+
+>>>>>>> Stashed changes
 	return true;
 }
 
