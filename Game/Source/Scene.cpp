@@ -9,6 +9,7 @@
 #include "Map.h"
 #include "Physics.h"
 #include "Player.h"
+#include "Pathfinding.h"
 
 
 #include "Defs.h"
@@ -51,7 +52,7 @@ bool Scene::Start()
 	//app->audio->PlayMusic("Assets/Audio/Music/music_spy.ogg");
 
 	// L03: DONE: Load map
-	app->map->Load();
+	bool retLoad = app->map->Load();
 
 	// L04: DONE 7: Set the window title with map/tileset info
 	SString title("Map:%dx%d Tiles:%dx%d Tilesets:%d",
@@ -63,6 +64,23 @@ bool Scene::Start()
 
 	app->win->SetTitle(title.GetString());
 
+//<<<<<<< Updated upstream
+//=======
+	//note: find where 'data' should come from
+
+	if (retLoad) {
+		int w, h;
+		uchar* data = NULL;
+
+		bool retWalkMap = app->map->CreateWalkabilityMap(w, h, &data);
+
+		if (retWalkMap) app->pathfinding->SetMap(w, h, data);
+
+		RELEASE_ARRAY(data);
+
+	}
+
+//>>>>>>> Stashed changes
 	return true;
 }
 
