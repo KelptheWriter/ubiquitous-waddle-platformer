@@ -23,6 +23,7 @@ class Map;
 //L07 DONE 2: Add Physics module
 class Physics;
 class PathFinding;
+class GuiManager;
 
 class App
 {
@@ -97,6 +98,7 @@ public:
 	//L07 DONE 2: Add Physics module
 	Physics* physics;
 	PathFinding* pathfinding;
+	GuiManager* guiManager;
 
 private:
 

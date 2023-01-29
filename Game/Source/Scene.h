@@ -4,6 +4,7 @@
 #include "Module.h"
 #include "Player.h"
 #include "Item.h"
+#include "GuiButton.h"
 
 struct SDL_Texture;
 
@@ -40,6 +41,8 @@ public:
 
 	bool godmode = false;
 
+	bool OnGuiMouseClickEvent(GuiControl* control);
+
 public:
 
 	//L02: DONE 3: Declare a Player attribute 
@@ -47,6 +50,9 @@ public:
 
 private:
 	SDL_Texture* img;
+
+	GuiButton* button1;
+	GuiButton* button2;
 
 };
 

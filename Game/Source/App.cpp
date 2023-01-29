@@ -9,13 +9,13 @@
 #include "Map.h"
 #include "Physics.h"
 #include "Pathfinding.h"
+#include "GuiManager.h"
 
 #include "Defs.h"
 #include "Log.h"
 
 #include <iostream>
 #include <sstream>
-#include <optick.h>
 
 // Constructor
 App::App(int argc, char* args[]) : argc(argc), args(args)
@@ -33,6 +33,7 @@ App::App(int argc, char* args[]) : argc(argc), args(args)
 	scene = new Scene();
 	entityManager = new EntityManager();
 	map = new Map();
+	guiManager = new GuiManager();
 
 	// Ordered for awake / Start / Update
 	// Reverse order of CleanUp
@@ -46,6 +47,7 @@ App::App(int argc, char* args[]) : argc(argc), args(args)
 	AddModule(scene);
 	AddModule(entityManager);
 	AddModule(map);
+	AddModule(guiManager);
 
 	// Render last to swap buffer
 	AddModule(render);
@@ -288,8 +290,6 @@ bool App::PostUpdate()
 // Called before quitting
 bool App::CleanUp()
 {
-	OPTICK_EVENT();
-
 	bool ret = true;
 	ListItem<Module*>* item;
 	item = modules.end;

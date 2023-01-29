@@ -11,7 +11,7 @@
 //#pragma comment(lib, "../Game/Source/External/SDL/libx86/SDL2main.lib")
 
 
-#include <optick.h>
+
 #include <stdlib.h>
 
 
@@ -82,7 +82,6 @@ int main(int argc, char* args[])
 			break;
 
 			// Loop all modules until we are asked to leave ---------------------
-			OPTICK_FRAME("YourThreadName");
 			case LOOP:
 			if(app->Update() == false)
 				state = CLEAN;

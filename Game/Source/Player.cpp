@@ -277,7 +277,7 @@ bool Player::Update()
 		//vel.y = vel.y ;
 		//Set the velocity of the pbody of the player
 		pbody->body->SetLinearVelocity(vel);
-		LOG("velocity: %f", 1.0f / 60.0f);
+		//LOG("velocity: %f", 1.0f / 60.0f);
 		//vel.y = vel.y / 60 / (app->dt / 1000);
 
 		//Update player position in pixels
