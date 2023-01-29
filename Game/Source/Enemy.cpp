@@ -94,17 +94,17 @@ bool Enemy::Update()
 	iPoint enemyPos = iPoint(position.x, position.y);
 	iPoint destiny = app->scene->player->position;
 
-	LOG("player x tile %d", app->map->WorldToMap(destiny.x, destiny.y).x);
+	//LOG("player x tile %d", app->map->WorldToMap(destiny.x, destiny.y).x);
 
 	app->pathfinding->CreatePath(app->map->WorldToMap(enemyPos.x, enemyPos.y), app->map->WorldToMap(destiny.x,destiny.y));
 	//app->render->DrawTexture(mouseTileTex, highlightedTileWorld.x, highlightedTileWorld.y);
 	
 	const DynArray<iPoint>* path = app->pathfinding->GetLastPath();
-	LOG("this is the number %d", path->Count());
+	//LOG("this is the number %d", path->Count());
 	for (uint i = 0; i < path->Count(); ++i)
 	{
 		iPoint pos = app->map->MapToWorld(path->At(i)->x, path->At(i)->y);
-		LOG("this is the number %d", path->At(i)->x);
+		//LOG("this is the number %d", path->At(i)->x);
 		app->render->DrawTexture(mouseTileTex, pos.x, pos.y);
 	}
 
@@ -117,7 +117,7 @@ bool Enemy::Update()
 	//}
 
 
-	if (pbody != NULL && !is_alive)
+	if (!hasBeenDestroyed && !is_alive)
 	{
 		if (currentAnimation->HasFinished())
 		{
@@ -126,7 +126,7 @@ bool Enemy::Update()
 			app->entityManager->DestroyEntity(this);
 
 
-
+			hasBeenDestroyed = true;
 		}
 		
 

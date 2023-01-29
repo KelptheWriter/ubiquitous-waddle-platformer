@@ -35,7 +35,7 @@ public:
 
 	bool CanJump = true;
 	bool CanDoubleJump = true;
-	bool is_alive;
+	bool is_alive =true, hasBeenDestroyed = false;
 
 	bool LoadState(pugi::xml_node&);
 	bool SaveState(pugi::xml_node&);

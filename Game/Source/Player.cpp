@@ -101,7 +101,7 @@ bool Player::Update()
 	//LOG(" IS WALKING %d", isWalking);
 	// L07 DONE 5: Add physics to the player - updated player position using physics
 
-	int speed = 10;
+	int speed = 10 * 60 * (app->dt / 1000);
 	//Try different values to see which works best
 	int jumpspeed = 25;
 	//b2Vec2 vel = b2Vec2(0, -GRAVITY_Y); 
@@ -162,7 +162,7 @@ bool Player::Update()
 
 			}
 			if (app->input->GetKey(SDL_SCANCODE_S) == KEY_REPEAT) {
-				vel = b2Vec2(0, -(speed + GRAVITY_Y - 35000));
+				vel = b2Vec2(0, -(speed + GRAVITY_Y * 60 * (app->dt / 1000) - 35000));
 				//app->render->camera.y = 0;
 				//app->render->camera.x = 0;
 
@@ -256,10 +256,10 @@ bool Player::Update()
 			//app->render->camera.y = -position.y + app->render->camera.h / 2;
 
 			if (-app->render->camera.x + app->render->camera.w / 2 <= position.x + 50 && -app->render->camera.x + app->render->camera.w <= 6995)
-				app->render->camera.x -= 5;
+				app->render->camera.x -= 5 * 60 * (app->dt / 1000);
 
 			if (-app->render->camera.x + app->render->camera.w / 2 > position.x - 50 && -app->render->camera.x > 0)
-				app->render->camera.x += 5;
+				app->render->camera.x += 5 * 60 * (app->dt / 1000);
 
 			//if (-app->render->camera.y + app->render->camera.h / 2 < position.y)                                   && app->render->camera.y <= -7000
 			//	app->render->camera.y -= 20;
@@ -274,9 +274,11 @@ bool Player::Update()
 
 
 		}
-
+		//vel.y = vel.y ;
 		//Set the velocity of the pbody of the player
 		pbody->body->SetLinearVelocity(vel);
+		LOG("velocity: %f", 1.0f / 60.0f);
+		//vel.y = vel.y / 60 / (app->dt / 1000);
 
 		//Update player position in pixels
 		position.x = METERS_TO_PIXELS(pbody->body->GetTransform().p.x) - 16;

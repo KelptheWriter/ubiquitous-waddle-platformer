@@ -46,9 +46,11 @@ bool Physics::PreUpdate()
 {
 	bool ret = true;
 	world->Step(1.0f / 60.0f, 6, 2);
+	//world->Step(app->dt / 1000.0f, 6, 2);
 
 	for (b2Contact* c = world->GetContactList(); c; c = c->GetNext())
 	{
+		
 		if (c->IsTouching() && c->GetFixtureA()->IsSensor())
 		{
 			PhysBody* pb1 = (PhysBody*)c->GetFixtureA()->GetBody()->GetUserData();

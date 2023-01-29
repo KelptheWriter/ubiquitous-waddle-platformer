@@ -6,6 +6,7 @@
 #include "SDL/include/SDL.h"
 #include "Animation.h"
 #include "Timer.h"
+#include "PerfTimer.h"
 
 struct SDL_Texture;
 
