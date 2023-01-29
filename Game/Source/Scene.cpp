@@ -91,8 +91,12 @@ bool Scene::Start()
 
 	uint w, h;
 	app->win->GetWindowSize(w, h);
-	button1 = (GuiButton*)app->guiManager->CreateGuiControl(GuiControlType::BUTTON, 1, "Play     ", { (int)w / 2 - 50,(int)h / 2 - 30,100,20 }, this);
-	button2 = (GuiButton*)app->guiManager->CreateGuiControl(GuiControlType::BUTTON, 2, "Settings", { (int)w / 2 - 50,(int)h / 2,100,20 }, this);
+	button1 = (GuiButton*)app->guiManager->CreateGuiControl(GuiControlType::BUTTON, 1, "Play     ", { (int)w / 2 - 300,(int)h / 2 - 30,100,20 }, this);
+	button2 = (GuiButton*)app->guiManager->CreateGuiControl(GuiControlType::BUTTON, 2, "Settings", { (int)w / 2 - 300,(int)h / 2,100,20 }, this);
+	button3 = (GuiButton*)app->guiManager->CreateGuiControl(GuiControlType::BUTTON, 3, "Credits  ", { (int)w / 2 - 300,(int)h / 2 + 30,100,20 }, this);
+	button4 = (GuiButton*)app->guiManager->CreateGuiControl(GuiControlType::BUTTON, 4, "Exit       ", { (int)w / 2 - 300,(int)h / 2 + 60,100,20 }, this);
+
+	button5 = (GuiButton*)app->guiManager->CreateGuiControl(GuiControlType::BUTTON, 5, "Credits X: ", { (int)w / 2 + 100,(int)h / 2 - 200,100,20 }, this);
 	return true;
 }
 
@@ -106,10 +110,14 @@ bool Scene::PreUpdate()
 bool Scene::Update(float dt)
 {
 	//Godmode currently is just bool var inside player, change things accordingly afterward
+	
+	
 
 	if (app->input->GetKey(SDL_SCANCODE_F10) == KEY_DOWN) {
 
 		SetGodmode();
+		button1->bounds.h = 0;
+		button1->bounds.w = 0;
 
 	}
 
@@ -144,7 +152,29 @@ bool Scene::Update(float dt)
 	// Draw map
 	app->map->Draw();
 
-	//app->guiManager->Draw();
+	SDL_Rect rect;
+	rect.h = 10000;
+	rect.w = 10000;
+	rect.x = -20;
+	rect.y = -20;
+
+	app->render->DrawRectangle(rect, 0, 0, 0, 255, true, true);
+
+	app->guiManager->Draw();
+
+	if (ShowCredits)
+	{
+		app->render->DrawText("created by Kaede Sato and Sergio Garriguez under MIT licence", 500, 220, 350, 30, { 255,255,255 });
+		button5->bounds.w = 100;
+		button5->bounds.h = 20;
+	}
+	else
+	{
+		button5->bounds.w = 0;
+		button5->bounds.h = 0;
+	}
+
+	//app->render->DrawText("created by Kaede Sato and Sergio Garriguez under MIT licence", 500, 220, 350, 30, { 255,255,255 });
 
 	return true;
 }
@@ -162,6 +192,15 @@ bool Scene::OnGuiMouseClickEvent(GuiControl* control)
 	case 2:
 		LOG("Button 2 click");
 		break;
+	case 3:
+		ShowCredits = true;
+		break;
+	case 4:
+		Quit = true;
+		break;
+	case 5:
+		ShowCredits = false;
+		break;
 	}
 
 	return true;
@@ -173,6 +212,10 @@ bool Scene::PostUpdate()
 
 	if (app->input->GetKey(SDL_SCANCODE_ESCAPE) == KEY_DOWN)
 		ret = false;
+	else if (Quit)
+	{
+		ret = false;
+	}
 
 	return ret;
 }

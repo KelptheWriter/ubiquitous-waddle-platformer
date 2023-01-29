@@ -41,6 +41,9 @@ public:
 
 	bool godmode = false;
 
+	bool Quit = false;
+	bool ShowCredits = false;
+
 	bool OnGuiMouseClickEvent(GuiControl* control);
 
 public:
@@ -53,6 +56,10 @@ private:
 
 	GuiButton* button1;
 	GuiButton* button2;
+	GuiButton* button3;
+	GuiButton* button4;
+
+	GuiButton* button5;
 
 };
 
