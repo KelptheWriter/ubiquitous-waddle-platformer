@@ -69,73 +69,76 @@ bool Enemy::Start() {
 bool Enemy::Update()
 {
 	//LOG("I am here %d", position.x);
-
-	int speed = 10;
-	int jumpspeed = 25;
-	b2Vec2 vel = pbody->body->GetLinearVelocity();
-	vel.x = 0;
-
-	if (vel.y > 1)
+	if (!app->scene->ShowMenu)
 	{
-		CanJump = false;
-	}
+		int speed = 10;
+		int jumpspeed = 25;
+		b2Vec2 vel = pbody->body->GetLinearVelocity();
+		vel.x = 0;
 
-	pbody->body->SetLinearVelocity(vel);
-
-	position.x = METERS_TO_PIXELS(pbody->body->GetTransform().p.x) - 16;
-	position.y = METERS_TO_PIXELS(pbody->body->GetTransform().p.y) - 16;
-
-	//app->pathfinding->CreatePath(position, app->scene->player->position);
-
-	//const DynArray<iPoint>* path = app->pathfinding->GetLastPath();
-
-	//int i = 0;
-
-	iPoint enemyPos = iPoint(position.x, position.y);
-	iPoint destiny = app->scene->player->position;
-
-	//LOG("player x tile %d", app->map->WorldToMap(destiny.x, destiny.y).x);
-
-	app->pathfinding->CreatePath(app->map->WorldToMap(enemyPos.x, enemyPos.y), app->map->WorldToMap(destiny.x,destiny.y));
-	//app->render->DrawTexture(mouseTileTex, highlightedTileWorld.x, highlightedTileWorld.y);
-	
-	const DynArray<iPoint>* path = app->pathfinding->GetLastPath();
-	//LOG("this is the number %d", path->Count());
-	for (uint i = 0; i < path->Count(); ++i)
-	{
-		iPoint pos = app->map->MapToWorld(path->At(i)->x, path->At(i)->y);
-		//LOG("this is the number %d", path->At(i)->x);
-		app->render->DrawTexture(mouseTileTex, pos.x, pos.y);
-	}
-
-	//while (position != app->scene->player->position && path != nullptr) {
-	//
-	//	position.x = path->At(i)->x;
-	//	position.y = path->At(i)->y;
-	//	
-	//
-	//}
-
-
-	if (!hasBeenDestroyed && !is_alive)
-	{
-		if (currentAnimation->HasFinished())
+		if (vel.y > 1)
 		{
-			app->physics->world->DestroyBody(pbody->body);
-			pbody->~PhysBody();
-			app->entityManager->DestroyEntity(this);
-
-
-			hasBeenDestroyed = true;
+			CanJump = false;
 		}
-		
 
-		
+		pbody->body->SetLinearVelocity(vel);
+
+		position.x = METERS_TO_PIXELS(pbody->body->GetTransform().p.x) - 16;
+		position.y = METERS_TO_PIXELS(pbody->body->GetTransform().p.y) - 16;
+
+		//app->pathfinding->CreatePath(position, app->scene->player->position);
+
+		//const DynArray<iPoint>* path = app->pathfinding->GetLastPath();
+
+		//int i = 0;
+
+		iPoint enemyPos = iPoint(position.x, position.y);
+		iPoint destiny = app->scene->player->position;
+
+		//LOG("player x tile %d", app->map->WorldToMap(destiny.x, destiny.y).x);
+
+		app->pathfinding->CreatePath(app->map->WorldToMap(enemyPos.x, enemyPos.y), app->map->WorldToMap(destiny.x, destiny.y));
+		//app->render->DrawTexture(mouseTileTex, highlightedTileWorld.x, highlightedTileWorld.y);
+
+		const DynArray<iPoint>* path = app->pathfinding->GetLastPath();
+		//LOG("this is the number %d", path->Count());
+		for (uint i = 0; i < path->Count(); ++i)
+		{
+			iPoint pos = app->map->MapToWorld(path->At(i)->x, path->At(i)->y);
+			//LOG("this is the number %d", path->At(i)->x);
+			app->render->DrawTexture(mouseTileTex, pos.x, pos.y);
+		}
+
+		//while (position != app->scene->player->position && path != nullptr) {
+		//
+		//	position.x = path->At(i)->x;
+		//	position.y = path->At(i)->y;
+		//	
+		//
+		//}
+
+
+		if (!hasBeenDestroyed && !is_alive)
+		{
+			if (currentAnimation->HasFinished())
+			{
+				app->physics->world->DestroyBody(pbody->body);
+				pbody->~PhysBody();
+				app->entityManager->DestroyEntity(this);
+
+
+				hasBeenDestroyed = true;
+			}
+
+
+
+		}
+
+		SDL_Rect rect = currentAnimation->GetCurrentFrame();
+		app->render->DrawTexture(texture, position.x - 20, position.y, &rect);
+		currentAnimation->Update();
 	}
-
-	SDL_Rect rect = currentAnimation->GetCurrentFrame();
-	app->render->DrawTexture(texture, position.x - 20, position.y, &rect);
-	currentAnimation->Update();
+	
 
 	return true;
 }

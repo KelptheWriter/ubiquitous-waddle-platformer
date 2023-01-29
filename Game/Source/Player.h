@@ -39,7 +39,7 @@ public:
 
 	iPoint GetPPos();
 	
-
+	int coins = 0;
 
 
 	Animation* currentAnimation = nullptr;

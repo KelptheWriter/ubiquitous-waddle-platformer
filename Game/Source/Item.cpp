@@ -42,18 +42,35 @@ bool Item::Start() {
 
 bool Item::Update()
 {
-
-	
-
-	//app->physics->world->DestroyBody(pbody->body);
+	if (!app->scene->ShowMenu && is_alive)
+	{
+		//app->physics->world->DestroyBody(pbody->body);
 	//pbody->~PhysBody();
 	//app->entityManager->DestroyEntity(this);
 
 	// L07 DONE 4: Add a physics to an item - update the position of the object from the physics.  
-	position.x = METERS_TO_PIXELS(pbody->body->GetTransform().p.x) - 16;
-	position.y = METERS_TO_PIXELS(pbody->body->GetTransform().p.y) - 16;
+		position.x = METERS_TO_PIXELS(pbody->body->GetTransform().p.x) - 16;
+		position.y = METERS_TO_PIXELS(pbody->body->GetTransform().p.y) - 16;
 
-	app->render->DrawTexture(texture, position.x, position.y);
+		app->render->DrawTexture(texture, position.x, position.y);
+	}
+	
+	if (!hasBeenDestroyed && !is_alive)
+	{
+		
+		{
+			app->physics->world->DestroyBody(pbody->body);
+			pbody->~PhysBody();
+			app->entityManager->DestroyEntity(this);
+
+
+			hasBeenDestroyed = true;
+		}
+
+
+
+	}
+	
 
 	return true;
 }
@@ -64,7 +81,7 @@ void Item::OnCollision(PhysBody* physA, PhysBody* physB)
 	{
 	case ColliderType::PLAYER:
 
-		
+		is_alive = false;
 
 		break;
 	case ColliderType::DANGER:

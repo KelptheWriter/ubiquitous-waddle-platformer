@@ -28,6 +28,8 @@ public:
 
 	bool isPicked = false;
 
+	bool is_alive = true, hasBeenDestroyed = false;
+
 private:
 
 	SDL_Texture* texture;

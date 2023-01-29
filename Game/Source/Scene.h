@@ -43,6 +43,8 @@ public:
 
 	bool Quit = false;
 	bool ShowCredits = false;
+	bool ShowSettings = false;
+	bool ShowMenu = true;
 
 	bool OnGuiMouseClickEvent(GuiControl* control);
 
@@ -60,6 +62,7 @@ private:
 	GuiButton* button4;
 
 	GuiButton* button5;
+	GuiButton* button6;
 
 };
 

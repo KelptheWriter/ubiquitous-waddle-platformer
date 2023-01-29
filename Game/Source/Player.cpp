@@ -105,7 +105,7 @@ bool Player::Update()
 	//Try different values to see which works best
 	int jumpspeed = 25;
 	//b2Vec2 vel = b2Vec2(0, -GRAVITY_Y); 
-	if (is_alive)
+	if (is_alive && !app->scene->ShowMenu)
 	{
 		b2Vec2 vel = pbody->body->GetLinearVelocity();
 		vel.x = 0;
@@ -205,6 +205,7 @@ bool Player::Update()
 
 				
 			}
+			
 		}
 
 		else
@@ -247,6 +248,10 @@ bool Player::Update()
 			pbody->body->SetTransform(b2Vec2(position.x, position.y), 0);
 			app->render->camera.x = 0;
 			app->render->camera.y = 0;
+		}
+		if (app->input->GetKey(SDL_SCANCODE_V) == KEY_REPEAT)
+		{
+			LOG("X: %d, Y: %d", position.x, position.y);
 		}
 
 
@@ -295,6 +300,34 @@ bool Player::Update()
 
 		app->render->DrawTexture(texture, position.x - 16, position.y - 62, &rect);
 		currentAnimation->Update();
+
+		switch (coins)
+		{
+		case 0:
+			app->render->DrawText("coins 0", 800, 20, 100, 30, { 255,255,0 });
+			break;
+		case 1:
+			app->render->DrawText("coins 1", 800, 20, 100, 30, { 255,255,0 });
+			break;
+		case 2:
+			app->render->DrawText("coins 2", 800, 20, 100, 30, { 255,255,0 });
+			break;
+		case 3:
+			app->render->DrawText("coins 3", 800, 20, 100, 30, { 255,255,0 });
+			break;
+		case 4:
+			app->render->DrawText("coins 4", 800, 20, 100, 30, { 255,255,0 });
+			break;
+		case 5:
+			app->render->DrawText("coins 5", 800, 20, 100, 30, { 255,255,0 });
+			break;
+		case 6:
+			app->render->DrawText("coins 6", 800, 20, 100, 30, { 255,255,0 });
+			break;
+		default:
+			break;
+		}
+		
 	}
 
 	if (pbody != NULL && !is_alive)
@@ -372,6 +405,11 @@ void Player::OnCollision(PhysBody* physA, PhysBody* physB)
 
 
 
+		break;
+
+	case ColliderType::ITEM:
+		coins++;
+		LOG("coins %d", coins);
 		break;
 	default:
 		break;

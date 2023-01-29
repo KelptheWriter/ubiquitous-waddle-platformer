@@ -92,6 +92,8 @@ bool Render::CleanUp()
 	return true;
 }
 
+
+
 void Render::SetBackgroundColor(SDL_Color color)
 {
 	background = color;

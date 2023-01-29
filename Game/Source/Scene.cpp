@@ -97,6 +97,7 @@ bool Scene::Start()
 	button4 = (GuiButton*)app->guiManager->CreateGuiControl(GuiControlType::BUTTON, 4, "Exit       ", { (int)w / 2 - 300,(int)h / 2 + 60,100,20 }, this);
 
 	button5 = (GuiButton*)app->guiManager->CreateGuiControl(GuiControlType::BUTTON, 5, "Credits X: ", { (int)w / 2 + 100,(int)h / 2 - 200,100,20 }, this);
+	button6 = (GuiButton*)app->guiManager->CreateGuiControl(GuiControlType::BUTTON, 6, "Settingss X:", { (int)w / 2 + 100,(int)h / 2 - 50,100,20 }, this);
 	return true;
 }
 
@@ -152,28 +153,59 @@ bool Scene::Update(float dt)
 	// Draw map
 	app->map->Draw();
 
-	SDL_Rect rect;
-	rect.h = 10000;
-	rect.w = 10000;
-	rect.x = -20;
-	rect.y = -20;
 
-	app->render->DrawRectangle(rect, 0, 0, 0, 255, true, true);
-
-	app->guiManager->Draw();
-
-	if (ShowCredits)
+	if (ShowMenu)
 	{
-		app->render->DrawText("created by Kaede Sato and Sergio Garriguez under MIT licence", 500, 220, 350, 30, { 255,255,255 });
-		button5->bounds.w = 100;
-		button5->bounds.h = 20;
+		SDL_Rect rect;
+		rect.h = 10000;
+		rect.w = 10000;
+		rect.x = -20;
+		rect.y = -20;
+
+		app->render->DrawRectangle(rect, 0, 0, 0, 255, true, true);
+
+		app->guiManager->Draw();
+
+		if (ShowCredits)
+		{
+			app->render->DrawText("created by Kaede Sato and Sergio Garriguez under MIT licence", 500, 220, 350, 30, { 255,255,255 });
+			button5->bounds.w = 100;
+			button5->bounds.h = 20;
+		}
+		else
+		{
+			button5->bounds.w = 0;
+			button5->bounds.h = 0;
+		}
+		if (ShowSettings)
+		{
+
+			button6->bounds.w = 100;
+			button6->bounds.h = 20;
+		}
+		else
+		{
+			button6->bounds.w = 0;
+			button6->bounds.h = 0;
+		}
+
 	}
 	else
 	{
+		button1->bounds.w = 0;
+		button1->bounds.h = 0;
+		button2->bounds.w = 0;
+		button2->bounds.h = 0;
+		button3->bounds.w = 0;
+		button3->bounds.h = 0;
+		button4->bounds.w = 0;
+		button4->bounds.h = 0;
 		button5->bounds.w = 0;
 		button5->bounds.h = 0;
+		button6->bounds.w = 0;
+		button6->bounds.h = 0;
 	}
-
+	
 	//app->render->DrawText("created by Kaede Sato and Sergio Garriguez under MIT licence", 500, 220, 350, 30, { 255,255,255 });
 
 	return true;
@@ -188,9 +220,11 @@ bool Scene::OnGuiMouseClickEvent(GuiControl* control)
 	{
 	case 1:
 		LOG("Button 1 click");
+		ShowMenu = false;
 		break;
 	case 2:
 		LOG("Button 2 click");
+		ShowSettings = true;
 		break;
 	case 3:
 		ShowCredits = true;
@@ -200,6 +234,9 @@ bool Scene::OnGuiMouseClickEvent(GuiControl* control)
 		break;
 	case 5:
 		ShowCredits = false;
+		break;
+	case 6:
+		ShowSettings = false;
 		break;
 	}
 

@@ -11,6 +11,10 @@ It is a simple platformer game.
  - Camera follows the player
  - Godmode and debug
  - You can jump on the enemy to kill it
+ - Now there are collectible coins
+ - There is a main menu
+ - The main menu has functional buttons
+ - The frame rate has been optimized
  
 ## Controls
 
