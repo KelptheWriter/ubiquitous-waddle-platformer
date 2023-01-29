@@ -15,6 +15,7 @@
 
 #include <iostream>
 #include <sstream>
+#include <optick.h>
 
 // Constructor
 App::App(int argc, char* args[]) : argc(argc), args(args)
@@ -287,6 +288,8 @@ bool App::PostUpdate()
 // Called before quitting
 bool App::CleanUp()
 {
+	OPTICK_EVENT();
+
 	bool ret = true;
 	ListItem<Module*>* item;
 	item = modules.end;

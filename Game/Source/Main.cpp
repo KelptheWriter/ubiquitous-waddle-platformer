@@ -10,7 +10,10 @@
 //#pragma comment(lib, "../Game/Source/External/SDL/libx86/SDL2.lib")
 //#pragma comment(lib, "../Game/Source/External/SDL/libx86/SDL2main.lib")
 
+
+#include <optick.h>
 #include <stdlib.h>
+
 
 enum MainState
 {
@@ -63,6 +66,7 @@ int main(int argc, char* args[])
 			break;
 
 			// Call all modules before first frame  ----------------------------
+
 			case START:
 			LOG("START PHASE ===============================");
 			if(app->Start() == true)
@@ -78,6 +82,7 @@ int main(int argc, char* args[])
 			break;
 
 			// Loop all modules until we are asked to leave ---------------------
+			OPTICK_FRAME("YourThreadName");
 			case LOOP:
 			if(app->Update() == false)
 				state = CLEAN;
